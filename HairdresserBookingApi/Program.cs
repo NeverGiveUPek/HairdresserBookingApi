@@ -1,5 +1,8 @@
-using HairdresserBookingApi.Models.Entities.Db;
+using System.Reflection;
+using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Seeders;
+using HairdresserBookingApi.Services.Implementations;
+using HairdresserBookingApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,9 @@ builder.Services.AddScoped<SeederFacade>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

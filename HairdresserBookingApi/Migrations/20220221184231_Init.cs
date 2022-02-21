@@ -79,26 +79,27 @@ namespace HairdresserBookingApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkerService",
+                name: "WorkerServices",
                 columns: table => new
                 {
-                    WorkerId = table.Column<int>(type: "int", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    RequiredMinutes = table.Column<int>(type: "int", nullable: false)
+                    RequiredMinutes = table.Column<int>(type: "int", nullable: false),
+                    WorkerId = table.Column<int>(type: "int", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WorkerService", x => new { x.WorkerId, x.ServiceId });
+                    table.PrimaryKey("PK_WorkerServices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkerService_Services_ServiceId",
+                        name: "FK_WorkerServices_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WorkerService_Workers_WorkerId",
+                        name: "FK_WorkerServices_Workers_WorkerId",
                         column: x => x.WorkerId,
                         principalTable: "Workers",
                         principalColumn: "Id",
@@ -111,9 +112,14 @@ namespace HairdresserBookingApi.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkerService_ServiceId",
-                table: "WorkerService",
+                name: "IX_WorkerServices_ServiceId",
+                table: "WorkerServices",
                 column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkerServices_WorkerId",
+                table: "WorkerServices",
+                column: "WorkerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -122,7 +128,7 @@ namespace HairdresserBookingApi.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "WorkerService");
+                name: "WorkerServices");
 
             migrationBuilder.DropTable(
                 name: "Role");

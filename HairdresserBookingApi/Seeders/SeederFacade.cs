@@ -1,4 +1,4 @@
-﻿using HairdresserBookingApi.Models.Entities.Db;
+﻿using HairdresserBookingApi.Models.Db;
 
 namespace HairdresserBookingApi.Seeders;
 
@@ -14,7 +14,7 @@ public class SeederFacade
     public SeederFacade(BookingDbContext dbContext)
     {
         _dbContext = dbContext;
-        
+
         _seeders.Add(new ServicesSeeder());
         _seeders.Add(new WorkersSeeder());
     }

@@ -4,6 +4,8 @@ namespace HairdresserBookingApi.Models.Entities.Api;
 
 public class WorkerService
 {
+    [Required]
+    [Key]
     public int Id { get; set; }
     [Required]
     public double Price { get; set; }

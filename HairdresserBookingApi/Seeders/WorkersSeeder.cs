@@ -1,5 +1,5 @@
-﻿using HairdresserBookingApi.Models.Entities.Api;
-using HairdresserBookingApi.Models.Entities.Db;
+﻿using HairdresserBookingApi.Models.Db;
+using HairdresserBookingApi.Models.Entities.Api;
 
 namespace HairdresserBookingApi.Seeders;
 

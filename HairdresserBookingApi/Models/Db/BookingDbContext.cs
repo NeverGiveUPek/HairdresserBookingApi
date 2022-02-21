@@ -1,20 +1,22 @@
-﻿using HairdresserBookingApi.Models.Entities.Api;
+﻿using HairdresserBookingApi.Models.Entities;
+using HairdresserBookingApi.Models.Entities.Api;
 using Microsoft.EntityFrameworkCore;
 
-namespace HairdresserBookingApi.Models.Entities.Db;
+namespace HairdresserBookingApi.Models.Db;
 
 public class BookingDbContext : DbContext
 {
 
     public DbSet<Service> Services { get; set; }
     public DbSet<Worker> Workers { get; set; }
+    public DbSet<WorkerService> WorkerServices { get; set; }
 
     public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<WorkerService>()
-            .HasKey(t => new {t.WorkerId, t.ServiceId});
+            .HasKey(t => t.Id);
 
         modelBuilder.Entity<WorkerService>()
             .HasOne(ws => ws.Worker)
