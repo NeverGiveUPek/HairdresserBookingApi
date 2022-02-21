@@ -27,6 +27,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="Models\Dto\" />
     <Folder Include="Models\Entities\Db\" />
+    <Folder Include="Seeders\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
