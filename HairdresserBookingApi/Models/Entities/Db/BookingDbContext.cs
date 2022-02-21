@@ -25,6 +25,10 @@ public class BookingDbContext : DbContext
             .HasOne(ws => ws.Service)
             .WithMany(s => s.WorkerServices)
             .HasForeignKey(ws => ws.ServiceId);
+    }
+
+    public BookingDbContext(DbContextOptions<BookingDbContext> options) : base(options)
+    {
 
     }
 }

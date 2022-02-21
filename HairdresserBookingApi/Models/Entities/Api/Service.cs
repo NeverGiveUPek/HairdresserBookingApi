@@ -14,10 +14,10 @@ public class Service
     [MaxLength(300)]
     public string Description { get; set; }
 
-    public int RequiredMinutes { get; set; }
+    [Required]
+    public bool IsForMan { get; set; }
 
-    public double Price { get; set; }
 
-    public virtual ICollection<Worker> Workers { get; set; }
+    public virtual ICollection<WorkerService> WorkerServices { get; set; }
 
 }

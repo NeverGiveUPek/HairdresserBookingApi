@@ -22,7 +22,7 @@ public class Worker
     [Phone]
     public string PhoneNumber { get; set; }
 
-    public virtual ICollection<Service> Services { get; set; }
+    public virtual ICollection<WorkerService> WorkerServices { get; set; }
 
 
 
