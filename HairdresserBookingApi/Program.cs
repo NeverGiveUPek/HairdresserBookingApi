@@ -1,4 +1,5 @@
 using System.Reflection;
+using HairdresserBookingApi.Middleware;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Seeders;
 using HairdresserBookingApi.Services.Implementations;
@@ -20,8 +21,11 @@ builder.Services.AddScoped<SeederFacade>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
+builder.Services.AddScoped<IWorkerService, WorkerService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddScoped<ExceptionMiddleware>();
+
 
 var app = builder.Build();
 
@@ -37,6 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

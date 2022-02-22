@@ -15,7 +15,7 @@ public class SeederFacade
     {
         _dbContext = dbContext;
 
-        _seeders.Add(new ServicesSeeder());
+        _seeders.Add(new ActivitySeeder());
         _seeders.Add(new WorkersSeeder());
     }
 

@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HairdresserBookingApi.Models.Entities.Api;
+namespace HairdresserBookingApi.Models.Dto.Activity;
 
-public class Service
+public class CreateActivityDto
 {
-    [Required]
     public int Id { get; set; }
 
     [Required]
@@ -17,7 +16,5 @@ public class Service
     [Required]
     public bool IsForMan { get; set; }
 
-
-    public virtual ICollection<WorkerService> WorkerServices { get; set; }
 
 }

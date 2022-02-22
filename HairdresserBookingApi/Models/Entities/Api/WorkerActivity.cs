@@ -2,7 +2,7 @@
 
 namespace HairdresserBookingApi.Models.Entities.Api;
 
-public class WorkerService
+public class WorkerActivity
 {
     [Required]
     [Key]
@@ -17,6 +17,6 @@ public class WorkerService
     public virtual Worker Worker { get; set; }
     
     [Required]
-    public int ServiceId { get; set; }
-    public virtual Service Service { get; set; }
+    public int ActivityId { get; set; }
+    public virtual Activity Activity { get; set; }
 }

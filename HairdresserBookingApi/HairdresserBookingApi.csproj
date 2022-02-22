@@ -24,10 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\Db\" />
-    <Folder Include="Seeders\" />
-    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Models\Exceptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
 </Project>

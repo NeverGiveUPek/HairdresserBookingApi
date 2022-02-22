@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HairdresserBookingApi", "HairdresserBookingApi\HairdresserBookingApi.csproj", "{5AE8D56F-840C-4A89-8999-8F97A9BE0757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HairdresserBookingApi", "HairdresserBookingApi\HairdresserBookingApi.csproj", "{5AE8D56F-840C-4A89-8999-8F97A9BE0757}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HairdresserBookingApi.UnitTests", "HairdresserBookingApi.UnitTests\HairdresserBookingApi.UnitTests.csproj", "{E821DCE8-3A56-4724-875C-56A50CC32F3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HairdresserBookingApi.UnitTests", "HairdresserBookingApi.UnitTests\HairdresserBookingApi.UnitTests.csproj", "{E821DCE8-3A56-4724-875C-56A50CC32F3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HairdresserBookingApi.IntegrationTests", "HairdresserBookingApi.IntegrationTests\HairdresserBookingApi.IntegrationTests.csproj", "{3555FA38-1F77-4E41-9352-109CB08814E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HairdresserBookingApi.IntegrationTests", "HairdresserBookingApi.IntegrationTests\HairdresserBookingApi.IntegrationTests.csproj", "{3555FA38-1F77-4E41-9352-109CB08814E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{445E2FFE-509C-45CE-ACD4-110E88E53C9E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
