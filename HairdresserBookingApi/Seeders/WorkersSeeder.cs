@@ -7,7 +7,7 @@ public class WorkersSeeder : ISeeder
 {
     public void Seed(BookingDbContext dbContext)
     {
-        if (dbContext.Services.Any()) return;
+        if (dbContext.Workers.Any()) return;
 
         var workers = GetWorkers();
 
@@ -18,12 +18,32 @@ public class WorkersSeeder : ISeeder
     {
         var workers = new List<Worker>();
 
+        var todayMidnight = DateTime.Today;
+        var todayStart = todayMidnight.AddHours(10);
+        var todayEnd = todayMidnight.AddHours(18);
+
         workers.Add(new Worker()
         {
             FirstName = "Agnieszka",
             LastName = "Kowalska",
             Email = "akowalska@gmail.com",
-            PhoneNumber = "+48 123 123 123"
+            PhoneNumber = "+48 123 123 123",
+            WorkerAvailabilities = new List<WorkerAvailability>()
+            {
+                new WorkerAvailability()
+                {
+                    Start = todayStart,
+                    End = todayEnd,
+                    Breaks = new List<WorkBreak>()
+                    {
+                        new WorkBreak()
+                        {
+                            From = todayStart.AddHours(1),
+                            To = todayStart.AddHours(2)
+                        }
+                    }
+                }
+            }
         });
 
         workers.Add(new Worker()
@@ -31,7 +51,15 @@ public class WorkersSeeder : ISeeder
             FirstName = "Adam",
             LastName = "Miły",
             Email = "adam_miły@gmail.com",
-            PhoneNumber = "+48 321 321 321"
+            PhoneNumber = "+48 321 321 321",
+            WorkerAvailabilities = new List<WorkerAvailability>()
+            {
+                new WorkerAvailability()
+                {
+                    Start = todayStart,
+                    End = todayEnd
+                }
+            }
         });
 
 
