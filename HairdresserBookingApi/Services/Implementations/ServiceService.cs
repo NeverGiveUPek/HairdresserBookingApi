@@ -3,6 +3,7 @@ using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserBookingApi.Services.Implementations;
 
@@ -31,4 +32,22 @@ public class ServiceService : IServiceService
         return servicesDto;
     }
 
+    public List<AvailableServiceDto> GetAllAvailable()
+    {
+        var availableServices = _dbContext
+            .WorkerServices
+            .Include(ws => ws.Service)
+            .ToList();
+
+        var availableCheapestServices = availableServices
+            .OrderBy(ws => ws.Price)
+            .GroupBy(ws => ws.ServiceId)
+            .Select(wsGroup => wsGroup.First())
+            .ToList();
+            
+
+        var availableServicesDto = _mapper.Map<List<AvailableServiceDto>>(availableCheapestServices);
+
+        return availableServicesDto;
+    }
 }

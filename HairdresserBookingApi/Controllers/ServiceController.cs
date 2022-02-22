@@ -29,4 +29,12 @@ public class ServiceController : ControllerBase
         return Ok(allServices);
     }
 
+    [HttpGet("available")]
+    public ActionResult<IEnumerable<AvailableServiceDto>> GetAllAvailable()
+    {
+        var allServices = _serviceService.GetAllAvailable();
+
+        return Ok(allServices);
+    }
+
 }

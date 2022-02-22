@@ -7,5 +7,8 @@ public interface IServiceService
 {
     List<ServiceDto> GetAll();
 
+    List<AvailableServiceDto> GetAllAvailable();
+
+
 
 }
