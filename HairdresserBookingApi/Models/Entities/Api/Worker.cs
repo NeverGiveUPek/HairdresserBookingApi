@@ -24,8 +24,7 @@ public class Worker
 
     public virtual ICollection<WorkerService> WorkerServices { get; set; }
 
-
-
+    public virtual ICollection<WorkerAvailability> WorkerAvailabilities { get; set; }
 
 
 }
