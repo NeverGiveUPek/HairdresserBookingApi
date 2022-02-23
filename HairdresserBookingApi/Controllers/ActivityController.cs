@@ -38,4 +38,22 @@ public class ActivityController : ControllerBase
         return Ok(allActivities);
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<ActivityDetailsDto> GetById([FromRoute] int id)
+    {
+        var activityDetailsDto = _activityService.GetById(id);
+
+        return Ok(activityDetailsDto);
+    }
+
+
+    [HttpPost]
+    public ActionResult Create([FromBody] CreateActivityDto dto)
+    {
+        var id = _activityService.Create(dto);
+
+        return Created($"api//{id}", null);
+    }
+
+
 }

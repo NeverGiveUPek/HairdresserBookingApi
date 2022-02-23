@@ -2,6 +2,7 @@
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Models.Dto.Worker;
+using HairdresserBookingApi.Models.Dto.WorkerActivity;
 using HairdresserBookingApi.Models.Entities.Api;
 
 namespace HairdresserBookingApi;
@@ -12,7 +13,12 @@ public class MappingProfile : Profile
     {
 
         CreateMap<Activity, ActivityDto>();
+        CreateMap<CreateActivityDto, Activity>();
         
+        CreateMap<Activity, ActivityDetailsDto>();
+
+        CreateMap<WorkerActivity, WorkerActivityDto>();
+
         CreateMap<WorkerActivity, AvailableActivityDto>()
             .ForMember(m => m.Name, c => c.MapFrom(s => s.Activity.Name))
             .ForMember(m => m.Description, c => c.MapFrom(s => s.Activity.Description))
@@ -23,6 +29,7 @@ public class MappingProfile : Profile
 
         CreateMap<Worker, WorkerDto>();
         CreateMap<Worker, WorkerDetailsDto>();
+
 
 
 

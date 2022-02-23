@@ -8,7 +8,11 @@ public interface IActivityService
 {
     List<ActivityDto> GetAll();
     List<AvailableActivityDto> GetAllAvailable();
-    void Create(CreateActivityDto dto);
+
+    ActivityDetailsDto GetById(int id);
+
+    //Returns id of created entity
+    int Create(CreateActivityDto dto); 
 
 
 }
