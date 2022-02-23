@@ -31,4 +31,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HairdresserBookingApi\HairdresserBookingApi.csproj" />
+  </ItemGroup>
+
 </Project>
