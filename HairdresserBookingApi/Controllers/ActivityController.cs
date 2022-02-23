@@ -56,4 +56,20 @@ public class ActivityController : ControllerBase
     }
 
 
+    [HttpDelete("{id}")]
+    public ActionResult Delete([FromRoute] int id)
+    {
+        _activityService.Delete(id);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    public ActionResult Update(UpdateActivityDto dto, [FromRoute] int id)
+    {
+        _activityService.Update(dto, id);
+
+        return Ok();
+    }
+
 }

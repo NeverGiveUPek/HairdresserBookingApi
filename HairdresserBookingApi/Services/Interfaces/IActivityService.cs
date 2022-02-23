@@ -13,6 +13,9 @@ public interface IActivityService
 
     //Returns id of created entity
     int Create(CreateActivityDto dto); 
+     
+    void Delete(int id);
 
+    void Update(UpdateActivityDto dto, int id);
 
 }

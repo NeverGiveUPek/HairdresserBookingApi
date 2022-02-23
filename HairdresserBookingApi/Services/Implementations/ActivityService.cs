@@ -72,11 +72,49 @@ public class ActivityService : IActivityService
 
     public int Create(CreateActivityDto dto)
     {
+        var foundActivity = _dbContext
+            .Activities
+            .SingleOrDefault(a => a.Name == dto.Name && a.IsForMan == dto.IsForMan);
+
+        if (foundActivity != null)
+            throw new EntityExistsException($"Entity with name:{dto.Name} and value of IsForMan:{dto.IsForMan} is already in database");
+
         var activity = _mapper.Map<Activity>(dto);
+
 
         _dbContext.Activities.Add(activity);
         _dbContext.SaveChanges();
 
         return activity.Id;
+    }
+
+    public void Delete(int id)
+    {
+        var activity = _dbContext
+            .Activities
+            .Include(a => a.WorkerActivity)
+            .SingleOrDefault(a => a.Id == id);
+
+        if (activity == null) throw new NotFoundException($"Activity of id: {id} is not found");
+
+        _dbContext.Activities.Remove(activity);
+        _dbContext.SaveChanges();
+    }
+
+    public void Update(UpdateActivityDto dto, int id)
+    {
+
+        var foundActivity = _dbContext
+            .Activities
+            .SingleOrDefault(a => a.Id == id);
+
+        if (foundActivity == null) throw new NotFoundException($"Activity of id: {id} is not found");
+
+        foundActivity.Name = dto.Name;
+        foundActivity.Description = dto.Description;
+        foundActivity.IsForMan = dto.IsForMan;
+
+
+        _dbContext.SaveChanges();
     }
 }

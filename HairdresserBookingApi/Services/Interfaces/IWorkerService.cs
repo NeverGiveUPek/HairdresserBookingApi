@@ -7,4 +7,5 @@ public interface IWorkerService
 {
     List<WorkerDto> GetAll();
     WorkerDetailsDto GetById(int id);
+
 }
