@@ -52,7 +52,7 @@ public class ActivityController : ControllerBase
     {
         var id = _activityService.Create(dto);
 
-        return Created($"api//{id}", null);
+        return Created($"api/activity/{id}", null);
     }
 
 

@@ -17,7 +17,7 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (EntityExistsException entityExistsException)
         {
-            context.Response.StatusCode = 404;
+            context.Response.StatusCode = 400;
             await context.Response.WriteAsync(entityExistsException.Message);
         } 
         catch (Exception)
