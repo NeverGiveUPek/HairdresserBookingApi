@@ -131,14 +131,14 @@ public class ActivityControllerTests : IClassFixture<WebApplicationFactory<Progr
     {
         var firstModel = new Activity()
         {
-            Name = "test",
+            Name = "Double create test",
             IsForMan = true,
             Description = "First"
         };
 
         var secondModel = new CreateActivityDto()
         {
-            Name = "test",
+            Name = "Double create test",
             IsForMan = true,
             Description = "Second"
         };
@@ -152,9 +152,103 @@ public class ActivityControllerTests : IClassFixture<WebApplicationFactory<Progr
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    [Fact]
+    public async Task Delete_ForValidId_ReturnsNoContent()
+    {
+        var model = new Activity()
+        {
+            Name = "test",
+            IsForMan = true,
+            Description = "First"
+        };
+
+        SeedActivity(model);
+
+        var response = await _client.DeleteAsync($"api/activity/{model.Id}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
+    public async Task Delete_ForInValidId_ReturnsNotFound()
+    {
+        var response = await _client.DeleteAsync($"api/activity/{-1}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task Update_ForValidModelAndExistingId_ReturnsOk()
+    {
+        var modelToUpdate = new Activity()
+        {
+            Name = "test to update success",
+            IsForMan = true,
+            Description = "First"
+        };
+        
+        SeedActivity(modelToUpdate);
 
 
+        var updateDto = new UpdateActivityDto()
+        {
+            Name = "Change test",
+            Description = "Change description test ",
+            IsForMan = false
+        };
 
+        var httpContent = updateDto.ToJsonHttpContent();
+
+        var response = await _client.PutAsync($"api/activity/{modelToUpdate.Id}", httpContent);
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task Update_ForValidModelAndNonExistingId_ReturnsNotFound()
+    {
+        
+        var updateDto = new UpdateActivityDto()
+        {
+            Name = "Change test",
+            Description = "Change description test ",
+            IsForMan = false
+        };
+
+        var httpContent = updateDto.ToJsonHttpContent();
+
+        var response = await _client.PutAsync($"api/activity/{-1}", httpContent);
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task Update_ForInValidModelAndExistingId_ReturnsBadRequest()
+    {
+        var modelToUpdate = new Activity()
+        {
+            Name = "test to update fail",
+            IsForMan = true,
+            Description = "First"
+        };
+
+        SeedActivity(modelToUpdate);
+
+
+        //lack of required description
+        var updateDto = new UpdateActivityDto()
+        {
+            Name = "Change test",
+            IsForMan = false
+        };
+
+
+        var httpContent = updateDto.ToJsonHttpContent();
+
+        var response = await _client.PutAsync($"api/activity/{modelToUpdate.Id}", httpContent);
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
 
 
 }
