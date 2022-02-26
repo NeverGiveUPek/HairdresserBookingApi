@@ -21,7 +21,7 @@ public class WorkerController : ControllerBase
     {
         var workersDto = _workerService.GetAll();
 
-        return workersDto;
+        return Ok(workersDto);
     }
 
     [HttpGet("{id}")]
@@ -29,9 +29,31 @@ public class WorkerController : ControllerBase
     {
         var workerDetailsDto = _workerService.GetById(id);
 
-        return workerDetailsDto;
+        return Ok(workerDetailsDto);
     }
 
+    [HttpPost]
+    public ActionResult Create([FromBody] CreateWorkerDto dto)
+    {
+        var workerId = _workerService.Create(dto);
 
+        return Created($"api/worker/{workerId}", null);
+    }
+
+    [HttpPut("{id}")]
+    public ActionResult Update([FromBody] UpdateWorkerDto dto, int id)
+    {
+        _workerService.Update(dto, id);
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult Delete(int id)
+    {
+        _workerService.Delete(id);
+
+        return NoContent();
+    }
 
 }

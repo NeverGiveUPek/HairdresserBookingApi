@@ -103,7 +103,6 @@ public class ActivityService : IActivityService
 
     public void Update(UpdateActivityDto dto, int id)
     {
-
         var foundActivity = _dbContext
             .Activities
             .SingleOrDefault(a => a.Id == id);

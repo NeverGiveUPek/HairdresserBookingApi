@@ -45,7 +45,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Reservation", b =>
@@ -74,7 +74,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasIndex("WorkerActivityId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkBreak", b =>
@@ -98,7 +98,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasIndex("WorkerAvailabilityId");
 
-                    b.ToTable("WorkBreak");
+                    b.ToTable("WorkBreak", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Worker", b =>
@@ -131,7 +131,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Workers");
+                    b.ToTable("Workers", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerActivity", b =>
@@ -160,7 +160,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("WorkerActivities");
+                    b.ToTable("WorkerActivities", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerAvailability", b =>
@@ -184,7 +184,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("WorkerAvailabilities");
+                    b.ToTable("WorkerAvailabilities", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Role", b =>
@@ -201,7 +201,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.User", b =>
@@ -242,7 +242,7 @@ namespace HairdresserBookingApi.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Reservation", b =>

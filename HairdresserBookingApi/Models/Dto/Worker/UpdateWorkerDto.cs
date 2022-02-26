@@ -1,30 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using HairdresserBookingApi.Models.Attributes;
 
-namespace HairdresserBookingApi.Models.Entities.Api;
+namespace HairdresserBookingApi.Models.Dto.Worker;
 
-public class Worker
+public class UpdateWorkerDto
 {
-    [Required]
-    public int Id { get; set; }
-
     [Required]
     [MaxLength(50)]
     public string FirstName { get; set; }
+
     [Required]
     [MaxLength(50)]
     public string LastName { get; set; }
+
+
     [Required]
     [MaxLength(50)]
+    [EmailAddress]
+    [WorkerEmailUnique]
     public string Email { get; set; }
 
     [Required]
     [MaxLength(30)]
     [Phone]
+    [WorkerPhoneNumberUnique]
     public string PhoneNumber { get; set; }
-    
-    public virtual ICollection<WorkerActivity> WorkerActivity { get; set; }
-
-    public virtual ICollection<WorkerAvailability> WorkerAvailabilities { get; set; }
-
-
 }

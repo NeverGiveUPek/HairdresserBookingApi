@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Db;
-using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Worker;
+using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;
 using HairdresserBookingApi.Services.Interfaces;
 
@@ -41,5 +41,44 @@ public class WorkerService : IWorkerService
         var workerDetailsDto = _mapper.Map<WorkerDetailsDto>(worker);
 
         return workerDetailsDto;
+    }
+
+    public int Create(CreateWorkerDto dto)
+    {
+
+        var worker = _mapper.Map<Worker>(dto);
+
+        _dbContext.Workers.Add(worker);
+        _dbContext.SaveChanges();
+
+        return worker.Id;
+    }
+
+    public void Update(UpdateWorkerDto dto, int id)
+    {
+        var foundWorker = _dbContext
+            .Workers
+            .FirstOrDefault(w => w.Id == id);
+
+        if (foundWorker == null) throw new NotFoundException($"Worker of id: {id} is not found");
+
+        foundWorker.FirstName = dto.FirstName;
+        foundWorker.LastName = dto.LastName;
+        foundWorker.Email = dto.Email;
+        foundWorker.PhoneNumber = dto.PhoneNumber;
+
+        _dbContext.SaveChanges();
+    }
+
+    public void Delete(int id)
+    {
+        var foundWorker = _dbContext
+            .Workers
+            .FirstOrDefault(w => w.Id == id);
+
+        if (foundWorker == null) throw new NotFoundException($"Worker of id: {id} is not found");
+
+        _dbContext.Workers.Remove(foundWorker);
+        _dbContext.SaveChanges();
     }
 }

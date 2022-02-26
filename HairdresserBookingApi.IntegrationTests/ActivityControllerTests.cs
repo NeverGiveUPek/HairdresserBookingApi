@@ -30,7 +30,7 @@ public class ActivityControllerTests : IClassFixture<WebApplicationFactory<Progr
             {
                 var dbContextOptions = services.SingleOrDefault(service =>
                     service.ServiceType == typeof(DbContextOptions<BookingDbContext>));
-                services.Remove(dbContextOptions);
+                if (dbContextOptions != null) services.Remove(dbContextOptions);
 
                 services.AddDbContext<BookingDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
 
@@ -43,11 +43,12 @@ public class ActivityControllerTests : IClassFixture<WebApplicationFactory<Progr
     private void SeedActivity(Activity activity)
     {
         var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-        using var scope = scopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetService<BookingDbContext>();
+        
+        using var scope = scopeFactory?.CreateScope();
+        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
 
-        dbContext.Activities.Add(activity);
-        dbContext.SaveChanges();
+        dbContext?.Activities.Add(activity);
+        dbContext?.SaveChanges();
     }
 
 

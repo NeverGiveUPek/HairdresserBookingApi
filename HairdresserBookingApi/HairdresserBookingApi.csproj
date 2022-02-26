@@ -27,6 +27,7 @@
     <Folder Include="Models\Db\" />
     <Folder Include="Models\Dto\WorkerActivity\" />
     <Folder Include="Models\Exceptions\" />
+    <Folder Include="Models\Attributes\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,7 +3,7 @@ using HairdresserBookingApi.Models.Entities.Api;
 
 namespace HairdresserBookingApi.Seeders;
 
-public class WorkersSeeder : ISeeder
+public class WorkerSeeder : ISeeder
 {
     public void Seed(BookingDbContext dbContext)
     {

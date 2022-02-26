@@ -29,6 +29,7 @@ public class MappingProfile : Profile
 
         CreateMap<Worker, WorkerDto>();
         CreateMap<Worker, WorkerDetailsDto>();
+        CreateMap<CreateWorkerDto, Worker>();
 
 
 
