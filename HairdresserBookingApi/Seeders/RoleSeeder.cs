@@ -11,6 +11,7 @@ public class RoleSeeder : ISeeder
         if (!dbContext.Roles.Any())
         {
             dbContext.Roles.AddRange(GetRoles());
+            dbContext.SaveChanges();
         }
     }
 

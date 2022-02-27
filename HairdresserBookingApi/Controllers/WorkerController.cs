@@ -1,12 +1,14 @@
 ﻿using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/worker")]
+[Authorize(Roles = "Admin,Manager")]
 public class WorkerController : ControllerBase
 {
     private readonly IWorkerService _workerService;
@@ -16,7 +18,9 @@ public class WorkerController : ControllerBase
         _workerService = workerService;
     }
 
+    
     [HttpGet]
+    [Authorize]
     public ActionResult<List<WorkerDto>> GetAll()
     {
         var workersDto = _workerService.GetAll();

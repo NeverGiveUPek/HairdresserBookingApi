@@ -1,5 +1,6 @@
 ﻿using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
@@ -35,4 +36,12 @@ public class AccountController : ControllerBase
         return Ok(jwt);
     }
 
+    [HttpPut("{id}/role")]
+    [Authorize("Admin,Manager")]
+    public ActionResult ChangeUserRole([FromBody] string role, [FromRoute] int id)
+    {
+        _accountService.ChangeRole(role, id);
+
+        return Ok();
+    }
 }

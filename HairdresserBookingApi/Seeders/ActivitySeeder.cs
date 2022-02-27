@@ -12,6 +12,7 @@ public class ActivitySeeder : ISeeder
         var activities = GetActivities();
         
         dbContext.Activities.AddRange(activities);
+        dbContext.SaveChanges();
     }
 
     private IEnumerable<Activity> GetActivities()

@@ -21,6 +21,11 @@ public class ExceptionMiddleware : IMiddleware
             context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             await context.Response.WriteAsync(entityExistsException.Message);
         }
+        catch (ForbidException forbidException)
+        {
+            context.Response.StatusCode = (int) HttpStatusCode.Forbidden;
+            await context.Response.WriteAsync(forbidException.Message);
+        }
         catch (AppException appException)
         {
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

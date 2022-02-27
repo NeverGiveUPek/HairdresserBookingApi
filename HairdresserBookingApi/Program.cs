@@ -61,6 +61,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<IWorkerService, WorkerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserContextService, UserContextService>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<ExceptionMiddleware>();
 builder.Services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
@@ -88,6 +90,8 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthorization();
 

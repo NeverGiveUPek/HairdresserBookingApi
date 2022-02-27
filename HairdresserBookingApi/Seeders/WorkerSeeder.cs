@@ -12,6 +12,7 @@ public class WorkerSeeder : ISeeder
         var workers = GetWorkers();
 
         dbContext.Workers.AddRange(workers);
+        dbContext.SaveChanges();
     }
 
     private IEnumerable<Worker> GetWorkers()

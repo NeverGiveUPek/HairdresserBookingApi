@@ -7,4 +7,7 @@ public interface IAccountService
     void CreateUser(CreateUserDto dto);
 
     string GenerateUserJwt(LoginUserDto dto);
+
+    void ChangeRole(string role, int id);
+
 }

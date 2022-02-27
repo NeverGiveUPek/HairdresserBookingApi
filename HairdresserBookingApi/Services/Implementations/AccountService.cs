@@ -20,13 +20,15 @@ public class AccountService : IAccountService
     private readonly IMapper _mapper;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly AuthenticationSettings _authenticationSettings;
+    private readonly IUserContextService _userContextService;
 
-    public AccountService(IMapper mapper, BookingDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+    public AccountService(IMapper mapper, BookingDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IUserContextService userContextService)
     {
         _mapper = mapper;
         _dbContext = dbContext;
         _passwordHasher = passwordHasher;
         _authenticationSettings = authenticationSettings;
+        _userContextService = userContextService;
     }
 
 
@@ -85,5 +87,34 @@ public class AccountService : IAccountService
         var generatedToken = tokenHandler.WriteToken(token);
 
         return generatedToken;
+    }
+
+    public void ChangeRole(string role, int id)
+    {
+        var foundRole = _dbContext.Roles.SingleOrDefault(r => r.Name == role);
+
+        if (foundRole == null) throw new NotFoundException("Role is incorrect");
+
+        var currentUserRole = _userContextService.GetUserRole();
+
+        var changeUser = _dbContext
+            .Users
+            .Include(u => u.Role)
+            .SingleOrDefault(u => u.Id == id);
+
+
+        if (changeUser == null) throw new NotFoundException($"User of id {id} is not found");
+
+        
+        switch (currentUserRole)
+        {
+            case "Manager" when changeUser.Role.Name is "Manager" or "Admin":
+                throw new ForbidException($"You can't change user of id {id} role");
+            case "Admin" when changeUser.Role.Name == "Admin":
+                throw new ForbidException($"You can't change user of id {id} role");
+        }
+
+        changeUser.Role = foundRole;
+        _dbContext.SaveChanges();
     }
 }

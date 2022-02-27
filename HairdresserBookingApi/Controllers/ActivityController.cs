@@ -2,6 +2,7 @@
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
@@ -9,6 +10,7 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/activity")]
+[Authorize]
 public class ActivityController : ControllerBase
 {
 
@@ -31,6 +33,7 @@ public class ActivityController : ControllerBase
     }
 
     [HttpGet("available")]
+    [AllowAnonymous]
     public ActionResult<IEnumerable<AvailableActivityDto>> GetAllAvailable()
     {
         var allActivities = _activityService.GetAllAvailable();
