@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using HairdresserBookingApi.Models.Attributes;
+using HairdresserBookingApi.Models.Validation.Attributes;
 
 namespace HairdresserBookingApi.Models.Dto.Worker;
 

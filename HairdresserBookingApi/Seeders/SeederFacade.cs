@@ -17,6 +17,7 @@ public class SeederFacade
 
         _seeders.Add(new ActivitySeeder());
         _seeders.Add(new WorkerSeeder());
+        _seeders.Add(new RoleSeeder());
     }
 
     public void Seed()

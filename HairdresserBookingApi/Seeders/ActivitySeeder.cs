@@ -16,29 +16,27 @@ public class ActivitySeeder : ISeeder
 
     private IEnumerable<Activity> GetActivities()
     {
-        var activities = new List<Activity>();
-
-        activities.Add(new Activity()
+        var activities = new List<Activity>
         {
-            Name = "Strzyżenie męskie",
-            Description = "Szybkie męskie strzyżenie",
-            IsForMan = true
-        });
-
-        activities.Add(new Activity()
-        {
-            Name = "Strzyżenie damskie",
-            Description = "Profesjonalne strzyżenie i pielęgnacja włosów",
-            IsForMan = false
-        });
-
-        activities.Add(new Activity()
-        {
-            Name = "Farbowanie włosów długich damskich",
-            Description = "Farbowanie długich włosów",
-            IsForMan = false
-        });
-
+            new Activity()
+            {
+                Name = "Strzyżenie męskie",
+                Description = "Szybkie męskie strzyżenie",
+                IsForMan = true
+            },
+            new Activity()
+            {
+                Name = "Strzyżenie damskie",
+                Description = "Profesjonalne strzyżenie i pielęgnacja włosów",
+                IsForMan = false
+            },
+            new Activity()
+            {
+                Name = "Farbowanie włosów długich damskich",
+                Description = "Farbowanie długich włosów",
+                IsForMan = false
+            }
+        };
 
 
         return activities;

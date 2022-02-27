@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using HairdresserBookingApi.Models.Attributes;
-using HairdresserBookingApi.Models.Entities.Api;
+using HairdresserBookingApi.Models.Validation.Attributes;
 
 namespace HairdresserBookingApi.Models.Dto.Worker;
 

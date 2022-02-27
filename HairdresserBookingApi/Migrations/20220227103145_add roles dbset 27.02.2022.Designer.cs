@@ -4,6 +4,7 @@ using HairdresserBookingApi.Models.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairdresserBookingApi.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220227103145_add roles dbset 27.02.2022")]
+    partial class addrolesdbset27022022
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +189,7 @@ namespace HairdresserBookingApi.Migrations
                     b.ToTable("WorkerAvailabilities");
                 });
 
-            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Users.Role", b =>
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -204,7 +206,7 @@ namespace HairdresserBookingApi.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Users.User", b =>
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,6 +233,10 @@ namespace HairdresserBookingApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
@@ -243,7 +249,7 @@ namespace HairdresserBookingApi.Migrations
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Reservation", b =>
                 {
-                    b.HasOne("HairdresserBookingApi.Models.Entities.Users.User", "User")
+                    b.HasOne("HairdresserBookingApi.Models.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,9 +307,9 @@ namespace HairdresserBookingApi.Migrations
                     b.Navigation("Worker");
                 });
 
-            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Users.User", b =>
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.User", b =>
                 {
-                    b.HasOne("HairdresserBookingApi.Models.Entities.Users.Role", "Role")
+                    b.HasOne("HairdresserBookingApi.Models.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

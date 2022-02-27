@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
+using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Dto.WorkerActivity;
 using HairdresserBookingApi.Models.Entities.Api;
+using HairdresserBookingApi.Models.Entities.Users;
 
 namespace HairdresserBookingApi;
 
@@ -32,6 +34,7 @@ public class MappingProfile : Profile
         CreateMap<CreateWorkerDto, Worker>();
 
 
+        CreateMap<CreateUserDto, User>();
 
 
     }

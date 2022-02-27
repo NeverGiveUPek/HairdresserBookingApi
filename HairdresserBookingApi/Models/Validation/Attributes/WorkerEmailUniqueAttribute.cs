@@ -1,20 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using HairdresserBookingApi.Models.Db;
 
-namespace HairdresserBookingApi.Models.Attributes;
+namespace HairdresserBookingApi.Models.Validation.Attributes;
 
-public class WorkerPhoneNumberUniqueAttribute : ValidationAttribute
+public class WorkerEmailUniqueAttribute : ValidationAttribute
 {
-    public string GetErrorMessage(string? phoneNumber) =>
-        $"PhoneNumber {phoneNumber} is already in use";
+    public string GetErrorMessage(string? email) =>
+        $"Email {email} is already in use";
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        if(value == null) return ValidationResult.Success;
 
+        if (value == null) return ValidationResult.Success;
 
         var context = (BookingDbContext)validationContext.GetService(typeof(BookingDbContext))!;
-        var entity = context.Workers.SingleOrDefault(e => e.PhoneNumber == value.ToString());
+        var entity = context.Workers.SingleOrDefault(e => e.Email == value.ToString());
 
 
 
@@ -22,8 +22,7 @@ public class WorkerPhoneNumberUniqueAttribute : ValidationAttribute
         {
             return new ValidationResult(GetErrorMessage(value.ToString()));
         }
-
-
+        
 
         return ValidationResult.Success;
     }

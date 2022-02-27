@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using HairdresserBookingApi.Models.Entities.Users;
 
 namespace HairdresserBookingApi.Models.Entities.Api;
 

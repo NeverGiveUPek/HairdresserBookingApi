@@ -13,6 +13,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.2">
@@ -25,9 +26,12 @@
 
   <ItemGroup>
     <Folder Include="Models\Db\" />
+    <Folder Include="Models\Dto\User\" />
     <Folder Include="Models\Dto\WorkerActivity\" />
     <Folder Include="Models\Exceptions\" />
-    <Folder Include="Models\Attributes\" />
+    <Folder Include="Models\Authentication\" />
+    <Folder Include="Models\Validation\Attributes\" />
+    <Folder Include="Models\Validation\Validators\" />
   </ItemGroup>
 
   <ItemGroup>

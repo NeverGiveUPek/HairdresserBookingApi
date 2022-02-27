@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 
-namespace HairdresserBookingApi.Models.Entities;
+namespace HairdresserBookingApi.Models.Entities.Users;
 
 public class User
 { 
@@ -18,10 +17,6 @@ public class User
     [MaxLength(50)]
     public string? LastName { get; set; }
 
-    [MaxLength(30)]
-    [Phone]
-    public string? PhoneNumber { get; set; }
-    
     public DateTime? DateOfBirth { get; set; }
 
     [Required]

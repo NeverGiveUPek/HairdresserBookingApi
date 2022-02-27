@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HairdresserBookingApi.Models.Entities;
+namespace HairdresserBookingApi.Models.Entities.Users;
 
 public class Role
 {

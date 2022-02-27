@@ -1,5 +1,6 @@
 ﻿using HairdresserBookingApi.Models.Entities;
 using HairdresserBookingApi.Models.Entities.Api;
+using HairdresserBookingApi.Models.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserBookingApi.Models.Db;
@@ -13,6 +14,7 @@ public class BookingDbContext : DbContext
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<WorkerAvailability> WorkerAvailabilities { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

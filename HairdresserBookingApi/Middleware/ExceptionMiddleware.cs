@@ -1,4 +1,5 @@
-﻿using HairdresserBookingApi.Models.Exceptions;
+﻿using System.Net;
+using HairdresserBookingApi.Models.Exceptions;
 
 namespace HairdresserBookingApi.Middleware;
 
@@ -12,17 +13,22 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (NotFoundException notFoundException)
         {
-            context.Response.StatusCode = 404;
+            context.Response.StatusCode = (int) HttpStatusCode.NotFound;
             await context.Response.WriteAsync(notFoundException.Message);
         }
         catch (EntityExistsException entityExistsException)
         {
-            context.Response.StatusCode = 400;
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             await context.Response.WriteAsync(entityExistsException.Message);
-        } 
+        }
+        catch (AppException appException)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            await context.Response.WriteAsync(appException.Message);
+        }
         catch (Exception)
         {
-            context.Response.StatusCode = 500;
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             await context.Response.WriteAsync("Error");
         }
     }
