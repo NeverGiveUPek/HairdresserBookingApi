@@ -8,7 +8,7 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/worker")]
-[Authorize(Roles = "Admin,Manager")]
+[Authorize]
 public class WorkerController : ControllerBase
 {
     private readonly IWorkerService _workerService;
@@ -20,7 +20,6 @@ public class WorkerController : ControllerBase
 
     
     [HttpGet]
-    [Authorize]
     public ActionResult<List<WorkerDto>> GetAll()
     {
         var workersDto = _workerService.GetAll();
@@ -29,6 +28,7 @@ public class WorkerController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Manager,Admin")]
     public ActionResult<WorkerDetailsDto> GetById([FromRoute] int id)
     {
         var workerDetailsDto = _workerService.GetById(id);
@@ -37,6 +37,7 @@ public class WorkerController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager,Admin")]
     public ActionResult Create([FromBody] CreateWorkerDto dto)
     {
         var workerId = _workerService.Create(dto);
@@ -45,6 +46,7 @@ public class WorkerController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Manager,Admin")]
     public ActionResult Update([FromBody] UpdateWorkerDto dto, int id)
     {
         _workerService.Update(dto, id);
@@ -53,6 +55,7 @@ public class WorkerController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager,Admin")]
     public ActionResult Delete(int id)
     {
         _workerService.Delete(id);

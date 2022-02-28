@@ -1,7 +1,7 @@
 ﻿using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Entities.Api;
 
-namespace HairdresserBookingApi.Seeders;
+namespace HairdresserBookingApi.Seeders.Implementations;
 
 public class ActivitySeeder : ISeeder
 {

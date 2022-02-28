@@ -1,7 +1,7 @@
 ﻿using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Entities.Api;
 
-namespace HairdresserBookingApi.Seeders;
+namespace HairdresserBookingApi.Seeders.Implementations;
 
 public class WorkerSeeder : ISeeder
 {
@@ -61,6 +61,22 @@ public class WorkerSeeder : ISeeder
                     End = todayEnd
                 }
             }
+        });
+
+        workers.Add(new Worker()
+        {
+            FirstName = "Natalia",
+            LastName = "Nowak",
+            Email = "natalia_nowak@gmail.com",
+            PhoneNumber = "+48 222 111 112",
+            WorkerAvailabilities = new List<WorkerAvailability>()
+            {
+                new WorkerAvailability()
+                {
+                    Start = todayStart,
+                    End = todayEnd
+                }
+            } 
         });
 
 

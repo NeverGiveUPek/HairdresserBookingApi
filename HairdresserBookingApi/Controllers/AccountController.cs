@@ -37,7 +37,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPut("{id}/role")]
-    [Authorize("Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult ChangeUserRole([FromBody] string role, [FromRoute] int id)
     {
         _accountService.ChangeRole(role, id);

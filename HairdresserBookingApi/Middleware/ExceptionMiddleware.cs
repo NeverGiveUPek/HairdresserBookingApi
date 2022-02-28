@@ -33,6 +33,7 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (Exception)
         {
+
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             await context.Response.WriteAsync("Error");
         }

@@ -1,8 +1,7 @@
 ﻿using HairdresserBookingApi.Models.Db;
-using HairdresserBookingApi.Models.Entities;
 using HairdresserBookingApi.Models.Entities.Users;
 
-namespace HairdresserBookingApi.Seeders;
+namespace HairdresserBookingApi.Seeders.Implementations;
 
 public class RoleSeeder : ISeeder
 {

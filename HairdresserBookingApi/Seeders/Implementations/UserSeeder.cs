@@ -2,7 +2,7 @@
 using HairdresserBookingApi.Models.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 
-namespace HairdresserBookingApi.Seeders;
+namespace HairdresserBookingApi.Seeders.Implementations;
 
 public class UserSeeder : ISeeder
 {
