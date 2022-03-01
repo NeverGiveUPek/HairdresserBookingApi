@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
+using HairdresserBookingApi.Models.Entities.Users;
 using HairdresserBookingApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,6 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/activity")]
-[Authorize]
 public class ActivityController : ControllerBase
 {
 
@@ -24,6 +24,7 @@ public class ActivityController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public ActionResult<IEnumerable<ActivityDto>> GetAll()
     {
         var allActivities = _activityService.GetAll();
@@ -42,6 +43,7 @@ public class ActivityController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult<ActivityDetailsDto> GetById([FromRoute] int id)
     {
         var activityDetailsDto = _activityService.GetById(id);
@@ -51,6 +53,7 @@ public class ActivityController : ControllerBase
 
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult Create([FromBody] CreateActivityDto dto)
     {
         var id = _activityService.Create(dto);
@@ -60,6 +63,7 @@ public class ActivityController : ControllerBase
 
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult Delete([FromRoute] int id)
     {
         _activityService.Delete(id);
@@ -68,6 +72,7 @@ public class ActivityController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult Update(UpdateActivityDto dto, [FromRoute] int id)
     {
         _activityService.Update(dto, id);

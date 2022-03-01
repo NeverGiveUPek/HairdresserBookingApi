@@ -8,7 +8,6 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/worker")]
-[Authorize]
 public class WorkerController : ControllerBase
 {
     private readonly IWorkerService _workerService;
@@ -20,6 +19,7 @@ public class WorkerController : ControllerBase
 
     
     [HttpGet]
+    [Authorize]
     public ActionResult<List<WorkerDto>> GetAll()
     {
         var workersDto = _workerService.GetAll();
