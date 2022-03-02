@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
+using HairdresserBookingApi.Models.Dto.Availability;
 using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Dto.WorkerActivity;
@@ -16,7 +17,7 @@ public class MappingProfile : Profile
 
         CreateMap<Activity, ActivityDto>();
         CreateMap<CreateActivityDto, Activity>();
-        
+
         CreateMap<Activity, ActivityDetailsDto>();
 
         CreateMap<WorkerActivity, WorkerActivityDto>();
@@ -36,6 +37,8 @@ public class MappingProfile : Profile
 
         CreateMap<CreateUserDto, User>();
 
+        CreateMap<Availability, AvailabilityDto>();
+        CreateMap<AddAvailabilityDto, Availability>();
 
     }
 }

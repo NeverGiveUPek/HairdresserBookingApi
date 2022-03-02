@@ -26,12 +26,12 @@
 
   <ItemGroup>
     <Folder Include="Models\Db\" />
+    <Folder Include="Models\Dto\Availability\" />
     <Folder Include="Models\Dto\User\" />
     <Folder Include="Models\Dto\WorkerActivity\" />
     <Folder Include="Models\Exceptions\" />
     <Folder Include="Models\Authentication\" />
     <Folder Include="Models\Validation\Attributes\" />
-    <Folder Include="Models\Validation\Validators\" />
   </ItemGroup>
 
   <ItemGroup>

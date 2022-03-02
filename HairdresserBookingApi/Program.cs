@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using HairdresserBookingApi.Middleware;
 using HairdresserBookingApi.Models.Authentication;
 using HairdresserBookingApi.Models.Db;
+using HairdresserBookingApi.Models.Dto.Availability;
 using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Models.Entities.Users;
 using HairdresserBookingApi.Models.Validation.Validators;
@@ -67,6 +68,8 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<ExceptionMiddleware>();
 builder.Services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
 builder.Services.AddScoped<IValidator<LoginUserDto>, LoginUserDtoValidator>();
+builder.Services.AddScoped<IValidator<AddAvailabilityDto>, AddAvailabilityDtoValidator>();
+
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddHttpContextAccessor();
 
