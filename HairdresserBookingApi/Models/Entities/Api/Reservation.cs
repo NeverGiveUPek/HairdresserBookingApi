@@ -15,7 +15,7 @@ public class Reservation
     public virtual User User { get; set; }
 
     [Required]
-    public int WorkerServiceId { get; set; }
+    public int WorkerActivityId { get; set; }
     public virtual WorkerActivity WorkerActivity { get; set; }
 
 }

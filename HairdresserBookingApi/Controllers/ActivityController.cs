@@ -43,7 +43,7 @@ public class ActivityController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize]
     public ActionResult<ActivityDetailsDto> GetById([FromRoute] int id)
     {
         var activityDetailsDto = _activityService.GetById(id);

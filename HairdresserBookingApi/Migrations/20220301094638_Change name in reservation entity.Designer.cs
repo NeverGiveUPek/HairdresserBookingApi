@@ -4,6 +4,7 @@ using HairdresserBookingApi.Models.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairdresserBookingApi.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220301094638_Change name in reservation entity")]
+    partial class Changenameinreservationentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,30 +50,6 @@ namespace HairdresserBookingApi.Migrations
                     b.ToTable("Activities");
                 });
 
-            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Availability", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkerId");
-
-                    b.ToTable("Availabilities");
-                });
-
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -96,6 +74,30 @@ namespace HairdresserBookingApi.Migrations
                     b.HasIndex("WorkerActivityId");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkBreak", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkerAvailabilityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkerAvailabilityId");
+
+                    b.ToTable("WorkBreak");
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Worker", b =>
@@ -160,6 +162,30 @@ namespace HairdresserBookingApi.Migrations
                     b.ToTable("WorkerActivities");
                 });
 
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerAvailability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkerId");
+
+                    b.ToTable("WorkerAvailabilities");
+                });
+
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Users.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -214,17 +240,6 @@ namespace HairdresserBookingApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Availability", b =>
-                {
-                    b.HasOne("HairdresserBookingApi.Models.Entities.Api.Worker", "Worker")
-                        .WithMany("Availabilities")
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Worker");
-                });
-
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Reservation", b =>
                 {
                     b.HasOne("HairdresserBookingApi.Models.Entities.Users.User", "User")
@@ -244,6 +259,17 @@ namespace HairdresserBookingApi.Migrations
                     b.Navigation("WorkerActivity");
                 });
 
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkBreak", b =>
+                {
+                    b.HasOne("HairdresserBookingApi.Models.Entities.Api.WorkerAvailability", "WorkerAvailability")
+                        .WithMany("Breaks")
+                        .HasForeignKey("WorkerAvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkerAvailability");
+                });
+
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerActivity", b =>
                 {
                     b.HasOne("HairdresserBookingApi.Models.Entities.Api.Activity", "Activity")
@@ -259,6 +285,17 @@ namespace HairdresserBookingApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Activity");
+
+                    b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerAvailability", b =>
+                {
+                    b.HasOne("HairdresserBookingApi.Models.Entities.Api.Worker", "Worker")
+                        .WithMany("WorkerAvailabilities")
+                        .HasForeignKey("WorkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Worker");
                 });
@@ -281,9 +318,14 @@ namespace HairdresserBookingApi.Migrations
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Worker", b =>
                 {
-                    b.Navigation("Availabilities");
-
                     b.Navigation("WorkerActivity");
+
+                    b.Navigation("WorkerAvailabilities");
+                });
+
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerAvailability", b =>
+                {
+                    b.Navigation("Breaks");
                 });
 #pragma warning restore 612, 618
         }

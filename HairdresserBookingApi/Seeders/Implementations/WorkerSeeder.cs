@@ -29,20 +29,17 @@ public class WorkerSeeder : ISeeder
             LastName = "Kowalska",
             Email = "akowalska@gmail.com",
             PhoneNumber = "+48 123 123 123",
-            WorkerAvailabilities = new List<WorkerAvailability>()
+            Availabilities = new List<Availability>()
             {
-                new WorkerAvailability()
+                new Availability()
                 {
-                    Start = todayStart,
-                    End = todayEnd,
-                    Breaks = new List<WorkBreak>()
-                    {
-                        new WorkBreak()
-                        {
-                            From = todayStart.AddHours(1),
-                            To = todayStart.AddHours(2)
-                        }
-                    }
+                    Start = todayStart.AddDays(1),
+                    End = todayEnd.AddDays(1),
+                },
+                new Availability()
+                {
+                    Start = todayStart.AddDays(2),
+                    End = todayEnd.AddDays(2),
                 }
             }
         });
@@ -53,9 +50,9 @@ public class WorkerSeeder : ISeeder
             LastName = "Miły",
             Email = "adam_miły@gmail.com",
             PhoneNumber = "+48 321 321 321",
-            WorkerAvailabilities = new List<WorkerAvailability>()
+            Availabilities = new List<Availability>()
             {
-                new WorkerAvailability()
+                new Availability()
                 {
                     Start = todayStart,
                     End = todayEnd
@@ -69,9 +66,9 @@ public class WorkerSeeder : ISeeder
             LastName = "Nowak",
             Email = "natalia_nowak@gmail.com",
             PhoneNumber = "+48 222 111 112",
-            WorkerAvailabilities = new List<WorkerAvailability>()
+            Availabilities = new List<Availability>()
             {
-                new WorkerAvailability()
+                new Availability()
                 {
                     Start = todayStart,
                     End = todayEnd

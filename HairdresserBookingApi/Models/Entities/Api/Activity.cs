@@ -17,7 +17,6 @@ public class Activity
     [Required]
     public bool IsForMan { get; set; }
 
-
     public virtual ICollection<WorkerActivity> WorkerActivity { get; set; }
 
 }

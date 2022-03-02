@@ -12,7 +12,7 @@ public class BookingDbContext : DbContext
     public DbSet<Worker> Workers { get; set; }
     public DbSet<WorkerActivity> WorkerActivities { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
-    public DbSet<WorkerAvailability> WorkerAvailabilities { get; set; }
+    public DbSet<Availability> Availabilities { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
 

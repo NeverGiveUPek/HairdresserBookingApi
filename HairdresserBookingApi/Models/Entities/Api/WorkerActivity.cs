@@ -19,4 +19,6 @@ public class WorkerActivity
     [Required]
     public int ActivityId { get; set; }
     public virtual Activity Activity { get; set; }
+
+    public virtual ICollection<Reservation> Reservations { get; set; }
 }

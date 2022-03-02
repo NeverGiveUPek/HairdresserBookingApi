@@ -4,6 +4,7 @@ using HairdresserBookingApi.Models.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairdresserBookingApi.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302111830_name change 02.03.2022 v3")]
+    partial class namechange02032022v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,6 +98,30 @@ namespace HairdresserBookingApi.Migrations
                     b.HasIndex("WorkerActivityId");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkBreak", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AvailabilityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AvailabilityId");
+
+                    b.ToTable("WorkBreak");
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Worker", b =>
@@ -244,6 +270,17 @@ namespace HairdresserBookingApi.Migrations
                     b.Navigation("WorkerActivity");
                 });
 
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkBreak", b =>
+                {
+                    b.HasOne("HairdresserBookingApi.Models.Entities.Api.Availability", "Availability")
+                        .WithMany("Breaks")
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Availability");
+                });
+
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.WorkerActivity", b =>
                 {
                     b.HasOne("HairdresserBookingApi.Models.Entities.Api.Activity", "Activity")
@@ -277,6 +314,11 @@ namespace HairdresserBookingApi.Migrations
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Activity", b =>
                 {
                     b.Navigation("WorkerActivity");
+                });
+
+            modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Availability", b =>
+                {
+                    b.Navigation("Breaks");
                 });
 
             modelBuilder.Entity("HairdresserBookingApi.Models.Entities.Api.Worker", b =>
