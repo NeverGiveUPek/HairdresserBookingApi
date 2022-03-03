@@ -1,11 +1,14 @@
 ﻿using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Entities.Users;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
 
 
 [ApiController]
+[Authorize(Roles = "Admin, Manager")]
 [Route("api/worker/{workerId}/availability")]
 public class AvailabilityController : ControllerBase
 {

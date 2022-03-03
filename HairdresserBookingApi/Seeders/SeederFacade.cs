@@ -23,6 +23,7 @@ public class SeederFacade
         _seeders.Add(new RoleSeeder());
         _seeders.Add(new UserSeeder(passwordHasher));
         _seeders.Add(new WorkerActivitySeeder());
+        _seeders.Add(new ReservationSeeder());
     }
 
     public void Seed()
