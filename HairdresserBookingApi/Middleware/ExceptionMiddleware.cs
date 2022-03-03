@@ -28,8 +28,13 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (AppException appException)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             await context.Response.WriteAsync(appException.Message);
+        }
+        catch (InvalidOperationException invalidOperationException)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            await context.Response.WriteAsync(invalidOperationException.Message);
         }
         catch (Exception)
         {

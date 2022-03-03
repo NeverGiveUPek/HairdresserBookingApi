@@ -22,10 +22,7 @@ public class AvailabilityService : IAvailabilityService
 
     public List<AvailabilityDto> GetAllAvailabilities(int workerId)
     {
-        var worker = _dbContext
-            .Workers
-            .Include(w => w.Availabilities)
-            .SingleOrDefault(w => w.Id == workerId);
+        var worker = GetWorker(workerId);
 
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
@@ -38,10 +35,7 @@ public class AvailabilityService : IAvailabilityService
 
     public List<AvailabilityDto> GetCurrentAvailabilities(int workerId)
     {
-        var worker = _dbContext
-            .Workers
-            .Include(w => w.Availabilities)
-            .SingleOrDefault(w => w.Id == workerId);
+        var worker = GetWorker(workerId);
 
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
@@ -54,10 +48,7 @@ public class AvailabilityService : IAvailabilityService
 
     public void AddAvailability(AddAvailabilityDto dto, int workerId)
     {
-        var worker = _dbContext
-            .Workers
-            .Include(w => w.Availabilities)
-            .SingleOrDefault(w => w.Id == workerId);
+        var worker = GetWorker(workerId);
 
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
@@ -76,5 +67,50 @@ public class AvailabilityService : IAvailabilityService
 
         _dbContext.Availabilities.Add(availability);
         _dbContext.SaveChanges();
+    }
+
+    public void Delete(int id, int workerId)
+    {
+        var worker = GetWorker(workerId);
+
+        if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
+
+        var availabilityToDelete = worker.Availabilities.SingleOrDefault(a => a.Id == id);
+
+        if (availabilityToDelete == null) throw new NotFoundException($"Availability of this id is not found");
+
+        _dbContext.Availabilities.Remove(availabilityToDelete);
+        _dbContext.SaveChanges();
+    }
+
+    public void Update(int id, int workerId, UpdateAvailabilityDto dto)
+    {
+        var worker = GetWorker(workerId);
+
+        if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
+
+        var availabilityToChange = worker.Availabilities.SingleOrDefault(a => a.Id == id);
+
+        if (availabilityToChange == null) throw new NotFoundException($"Availability of this id is not found");
+
+
+        if (availabilityToChange.Start.Day != dto.Start.Day || availabilityToChange.End.Day != dto.End.Day)
+            throw new InvalidOperationException($"You can't change days of availability");
+        
+        availabilityToChange.Start = dto.Start;
+        availabilityToChange.End = dto.End;
+
+        _dbContext.SaveChanges();
+
+    }
+
+    private Worker? GetWorker(int workerId)
+    {
+        var worker = _dbContext
+            .Workers
+            .Include(w => w.Availabilities)
+            .SingleOrDefault(w => w.Id == workerId);
+
+        return worker;
     }
 }

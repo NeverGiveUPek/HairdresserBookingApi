@@ -8,5 +8,6 @@ public interface IAvailabilityService
     List<AvailabilityDto> GetCurrentAvailabilities(int workerId);
 
     void AddAvailability(AddAvailabilityDto dto, int workerId);
-
+    void Delete(int id, int workerId);
+    void Update(int id, int workerId, UpdateAvailabilityDto dto);
 }

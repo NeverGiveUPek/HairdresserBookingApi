@@ -41,5 +41,20 @@ public class AvailabilityController : ControllerBase
         return Created($"api/worker/{workerId}/availability/current", null);
     }
 
+    [HttpDelete("{id}")]
+    public ActionResult RemoveAvailability([FromRoute] int id, [FromRoute] int workerId)
+    {
+        _availabilityService.Delete(id, workerId);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    public ActionResult UpdateAvailability([FromRoute] int id, [FromRoute] int workerId, [FromBody]UpdateAvailabilityDto dto )
+    {
+        _availabilityService.Update(id, workerId, dto);
+
+        return Ok();
+    }
 
 }

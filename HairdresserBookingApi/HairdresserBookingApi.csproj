@@ -32,6 +32,7 @@
     <Folder Include="Models\Exceptions\" />
     <Folder Include="Models\Authentication\" />
     <Folder Include="Models\Validation\Attributes\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>
