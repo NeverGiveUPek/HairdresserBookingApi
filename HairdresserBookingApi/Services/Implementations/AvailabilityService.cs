@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;
 using HairdresserBookingApi.Services.Interfaces;
@@ -104,6 +105,24 @@ public class AvailabilityService : IAvailabilityService
 
     }
 
+    public AvailabilityDto AvailabilityInDay(DateTime date, int workerId)
+    {
+        var worker = GetWorker(workerId);
+
+        if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
+
+        
+        var availabilityInDay =  worker
+            .Availabilities
+            .FirstOrDefault(w => w.Start.Date == date.Date);
+
+
+        var availabilityInDayDto = _mapper.Map<AvailabilityDto>(availabilityInDay);
+
+        return availabilityInDayDto;
+    }
+
+
     private Worker? GetWorker(int workerId)
     {
         var worker = _dbContext
@@ -113,4 +132,7 @@ public class AvailabilityService : IAvailabilityService
 
         return worker;
     }
+
+
+
 }
