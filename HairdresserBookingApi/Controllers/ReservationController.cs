@@ -18,14 +18,15 @@ public class ReservationController : ControllerBase
         _reservationService = reservationService;
     }
 
-
-    [HttpPost]
-    public IActionResult Test([FromBody] ReservationRequestDto request)
+    
+    [HttpGet("day")]
+    public IActionResult GetAllPossibleTimesInDay([FromQuery] ReservationDto reservationRequest)
     {
-        var isAccessible = _reservationService.IsAccessible(request);
+        var allPossibleTimes = _reservationService.GetAllPossibleTimesInDay(reservationRequest);
 
-        return Ok();
+        return Ok(allPossibleTimes);
     }
+
 
 
 }

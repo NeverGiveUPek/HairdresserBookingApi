@@ -12,5 +12,5 @@ public interface IAvailabilityService
     void Delete(int id, int workerId);
     void Update(int id, int workerId, UpdateAvailabilityDto dto);
 
-    AvailabilityDto AvailabilityInDay(DateTime date, int workerId);
+    AvailabilityDto? AvailabilityInDay(DateTime date, int workerId);
 }

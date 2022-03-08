@@ -2,7 +2,7 @@
 
 namespace HairdresserBookingApi.Models.Dto.Reservation;
 
-public class ReservationRequestDto
+public class ReservationDto
 {
 
     [Required] 

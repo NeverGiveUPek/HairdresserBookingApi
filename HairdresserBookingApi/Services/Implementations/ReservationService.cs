@@ -24,38 +24,24 @@ public class ReservationService : IReservationService
     }
 
 
-    public bool IsAccessible(ReservationRequestDto request)
+    private bool IsAccessible(ReservationDto request)
     {
-        var workerActivity = _dbContext
-            .WorkerActivities
-            .Include(wa => wa.Worker)
-            .ThenInclude(w => w.Availabilities)
-            .FirstOrDefault(wa => wa.Id == request.WorkerActivityId);
+        var possibleTimesInDay = GetAllPossibleTimesInDay(request);
 
-        if (workerActivity == null)
-            throw new NotFoundException($"Worker activity of id {request.WorkerActivityId} is not found in database");
-
-
-        var accessibilityList = AccessibilityInDay(request.Date, workerActivity.WorkerId);
-
-        //check if is inside any TimeRange
-
-        foreach (var range in accessibilityList)
+        foreach (var timeRange in possibleTimesInDay)
         {
-            if (range.From <= request.Date && range.To >= request.Date.AddMinutes(workerActivity.RequiredMinutes))
+            if (request.Date >= timeRange.From && request.Date <= timeRange.To)
             {
                 return true;
             }
         }
-        
 
 
         return false;
     }
 
     
-
-    public List<TimeRange> AccessibilityInDay(DateTime date, int workerId)
+    private List<TimeRange> AccessibilityInDay(DateTime date, int workerId)
     {
         var workerAvailability = _availabilityService.AvailabilityInDay(date, workerId);
 
@@ -103,5 +89,36 @@ public class ReservationService : IReservationService
 
 
         return accessibilityList;
+    }
+
+    public List<TimeRange> GetAllPossibleTimesInDay(ReservationDto request)
+    {
+
+        var workerActivity = _dbContext
+            .WorkerActivities
+            .Include(wa => wa.Worker)
+            .ThenInclude(w => w.Availabilities)
+            .FirstOrDefault(wa => wa.Id == request.WorkerActivityId);
+
+        if (workerActivity == null)
+            throw new NotFoundException($"Worker activity of id {request.WorkerActivityId} is not found in database");
+
+
+        var accessibilityList = AccessibilityInDay(request.Date.Date, workerActivity.WorkerId);
+
+
+
+        var possibleTimes = new List<TimeRange>();
+
+        foreach (var timeRange in accessibilityList)
+        {
+            if(timeRange.From <= timeRange.To.AddMinutes(-1 * workerActivity.RequiredMinutes))
+            {
+                possibleTimes.Add(new TimeRange(timeRange.From, timeRange.To.AddMinutes(-1 * workerActivity.RequiredMinutes)));
+            }
+        }
+
+        return possibleTimes;
+
     }
 }

@@ -105,7 +105,7 @@ public class AvailabilityService : IAvailabilityService
 
     }
 
-    public AvailabilityDto AvailabilityInDay(DateTime date, int workerId)
+    public AvailabilityDto? AvailabilityInDay(DateTime date, int workerId)
     {
         var worker = GetWorker(workerId);
 
