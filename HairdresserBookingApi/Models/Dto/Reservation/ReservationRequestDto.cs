@@ -2,13 +2,11 @@
 
 namespace HairdresserBookingApi.Models.Dto.Reservation;
 
-public class ReservationDto
+public class ReservationRequestDto
 {
+    //validation in ReservationRequestDtoValidator
 
-    [Required] 
     public DateTime Date { get; set; }
-
-    [Required]
     public int WorkerActivityId { get; set; }
 
 }

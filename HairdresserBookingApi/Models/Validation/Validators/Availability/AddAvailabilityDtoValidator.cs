@@ -1,26 +1,27 @@
 ﻿using FluentValidation;
 using HairdresserBookingApi.Helpers;
-using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Models.Dto.Availability;
 
-namespace HairdresserBookingApi.Models.Validation.Validators;
+namespace HairdresserBookingApi.Models.Validation.Validators.Availability;
 
-public class UpdateAvailabilityDtoValidator : AbstractValidator<UpdateAvailabilityDto>
+public class AddAvailabilityDtoValidator : AbstractValidator<AddAvailabilityDto>
 {
-    public UpdateAvailabilityDtoValidator()
+    public AddAvailabilityDtoValidator()
     {
-        RuleFor(u => u.Start)
+        RuleFor(a => a.Start)
             .NotEmpty()
             .Custom((value, context) =>
             {
+                if (!DateTimeHelper.IsDateInFuture(value)) context.AddFailure("Date should be in future");
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
             });
 
-        RuleFor(u => u.End)
+        RuleFor(a => a.End)
             .NotEmpty()
             .GreaterThan(a => a.Start)
             .Custom((value, context) =>
             {
+                if (!DateTimeHelper.IsDateInFuture(value)) context.AddFailure("Date should be in future");
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
             });
 
@@ -28,5 +29,7 @@ public class UpdateAvailabilityDtoValidator : AbstractValidator<UpdateAvailabili
             .Equal(u => u.Start.Day)
             .WithMessage("Availability Start and End must be in same day");
 
+
     }
+
 }

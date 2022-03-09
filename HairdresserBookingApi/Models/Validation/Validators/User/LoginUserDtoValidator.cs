@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HairdresserBookingApi.Models.Dto.User;
 
-namespace HairdresserBookingApi.Models.Validation.Validators;
+namespace HairdresserBookingApi.Models.Validation.Validators.User;
 
 public class LoginUserDtoValidator : AbstractValidator<LoginUserDto>
 {

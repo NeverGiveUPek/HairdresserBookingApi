@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Reservation;
+using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;
 using HairdresserBookingApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,7 @@ public class ReservationService : IReservationService
     }
 
 
-    private bool IsAccessible(ReservationDto request)
+    private bool IsAccessible(ReservationRequestDto request)
     {
         var possibleTimesInDay = GetAllPossibleTimesInDay(request);
 
@@ -68,18 +69,33 @@ public class ReservationService : IReservationService
             list.Add(new TimeRange(start,end));   
         }
 
+        //collapse reservationRequest times example: 11:00-11:30 and 11:30-12:00 => 11:00-12:00
+
+        for (int i = list.Count - 1; i > 0 ; i--)
+        {
+            if (list[i].From == list[i - 1].To)
+            {
+                list[i-1].To = list[i].To;
+                list.RemoveAt(i);
+            }
+        }
+
+
+
+
+
         var accessibilityList = new List<TimeRange>();
 
         if (list.Count > 0)
         {
             accessibilityList.Add(new TimeRange(workerAvailability.Start, list[0].From));
 
-            for (int i = 0; i < reservations.Count - 1; i++)
+            for (int i = 0; i < list.Count - 1; i++)
             {
                 accessibilityList.Add(new TimeRange(list[i].To, list[i + 1].From));
             }
 
-            accessibilityList.Add(new TimeRange(list[reservations.Count - 1].To, workerAvailability.End));
+            accessibilityList.Add(new TimeRange(list[^1].To, workerAvailability.End)); //[^1] - first from the end 
         }
         else
         {
@@ -91,7 +107,7 @@ public class ReservationService : IReservationService
         return accessibilityList;
     }
 
-    public List<TimeRange> GetAllPossibleTimesInDay(ReservationDto request)
+    public List<TimeRange> GetAllPossibleTimesInDay(ReservationRequestDto request)
     {
 
         var workerActivity = _dbContext
@@ -120,5 +136,38 @@ public class ReservationService : IReservationService
 
         return possibleTimes;
 
+    }
+
+    public void MakeReservation(ReservationRequestDto request)
+    {
+        
+
+        var isAccessible = IsAccessible(request);
+
+        if (!isAccessible) throw new NotAccessibleException($"Reservation can't be in this time");
+        
+        var userId = _userContextService.GetUserId();
+        if (userId == null) throw new AppException($"Can't receive userId from Claims");
+
+        var amountOfFutureReservation = CountAmountOfUserFutureReservation((int) userId);
+
+        if (amountOfFutureReservation >= 5) throw new ForbidException($"Maximum amount of current reservation is 5");
+
+        var reservationEntity = _mapper.Map<Reservation>(request);
+
+        
+
+        reservationEntity.UserId = (int) userId;
+
+        _dbContext.Reservations.Add(reservationEntity);
+        _dbContext.SaveChanges();
+    }
+
+
+    private int CountAmountOfUserFutureReservation(int userId)
+    {
+        var amount = _dbContext.Reservations.Count(r => r.UserId == userId && r.Date > DateTime.Now);
+
+        return amount;
     }
 }

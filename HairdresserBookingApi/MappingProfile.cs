@@ -2,6 +2,7 @@
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Dto.WorkerActivity;
@@ -39,6 +40,8 @@ public class MappingProfile : Profile
 
         CreateMap<Availability, AvailabilityDto>();
         CreateMap<AddAvailabilityDto, Availability>();
+
+        CreateMap<ReservationRequestDto, Reservation>();
 
     }
 }
