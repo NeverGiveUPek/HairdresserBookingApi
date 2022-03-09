@@ -163,6 +163,30 @@ public class ReservationService : IReservationService
         _dbContext.SaveChanges();
     }
 
+    public List<ReservationInfoDto> GetAllReservations()
+    {
+        var userId = _userContextService.GetUserId();
+        if (userId == null) throw new AppException($"Can't receive userId from Claims");
+
+        var reservations = _dbContext.Reservations.Include(r => r.WorkerActivity).Where(r => r.UserId == userId);
+
+        var reservationsInfo = _mapper.Map<List<ReservationInfoDto>>(reservations);
+
+        return reservationsInfo;
+    }
+
+    public List<ReservationInfoDto> GetFutureReservations()
+    {
+        var userId = _userContextService.GetUserId();
+        if (userId == null) throw new AppException($"Can't receive userId from Claims");
+
+        var reservations = _dbContext.Reservations.Include(r => r.WorkerActivity).Where(r => r.UserId == userId && r.Date > DateTime.Now);
+
+        var reservationsInfo = _mapper.Map<List<ReservationInfoDto>>(reservations);
+
+        return reservationsInfo;
+    }
+
 
     private int CountAmountOfUserFutureReservation(int userId)
     {

@@ -22,7 +22,7 @@ public class ReservationController : ControllerBase
 
     
     [HttpGet("day")]
-    public IActionResult GetAllPossibleTimesInDay([FromQuery] ReservationRequestDto reservationRequest)
+    public ActionResult GetAllPossibleTimesInDay([FromQuery] ReservationRequestDto reservationRequest)
     {
         var allPossibleTimes = _reservationService.GetAllPossibleTimesInDay(reservationRequest);
 
@@ -31,14 +31,28 @@ public class ReservationController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult MakeReservation([FromBody] ReservationRequestDto reservation)
+    public ActionResult MakeReservation([FromBody] ReservationRequestDto reservation)
     {
         _reservationService.MakeReservation(reservation);
 
         return Created("", null);
     }
 
-    
+    [HttpGet("all")]
+    public ActionResult<IEnumerable<ReservationInfoDto>> GetAllReservations()
+    {
+        var reservationsInfo = _reservationService.GetAllReservations();
+
+        return Ok(reservationsInfo);
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<ReservationInfoDto>> GetFutureReservations()
+    {
+        var reservationsInfo = _reservationService.GetFutureReservations();
+
+        return Ok(reservationsInfo);
+    }
 
 
 

@@ -43,5 +43,9 @@ public class MappingProfile : Profile
 
         CreateMap<ReservationRequestDto, Reservation>();
 
+        CreateMap<Reservation, ReservationInfoDto>()
+            .ForMember(r => r.Price, c => c.MapFrom(s => s.WorkerActivity.Price))
+            .ForMember(r => r.RequiredMinutes, c => c.MapFrom(s => s.WorkerActivity.RequiredMinutes));
+
     }
 }
