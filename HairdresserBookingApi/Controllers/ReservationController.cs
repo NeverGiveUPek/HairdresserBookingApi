@@ -54,6 +54,13 @@ public class ReservationController : ControllerBase
         return Ok(reservationsInfo);
     }
 
+    [HttpDelete("{id}")]
+    public ActionResult DeleteReservation([FromRoute] int id)
+    {
+        _reservationService.DeleteReservation(id);
+
+        return NoContent();
+    }
 
 
 

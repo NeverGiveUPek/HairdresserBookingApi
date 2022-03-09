@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HairdresserBookingApi.Authorization;
 using HairdresserBookingApi.Middleware;
 using HairdresserBookingApi.Models.Authentication;
 using HairdresserBookingApi.Models.Db;
@@ -16,6 +17,7 @@ using HairdresserBookingApi.Models.Validation.Validators.User;
 using HairdresserBookingApi.Seeders;
 using HairdresserBookingApi.Services.Implementations;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -62,7 +64,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
+builder.Services.AddScoped<IAuthorizationHandler, OperationRequirementHandler>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<IWorkerService, WorkerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();

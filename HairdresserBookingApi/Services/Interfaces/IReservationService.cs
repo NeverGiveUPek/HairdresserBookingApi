@@ -11,4 +11,7 @@ public interface IReservationService
     List<ReservationInfoDto> GetAllReservations();
     List<ReservationInfoDto> GetFutureReservations();
 
+    void DeleteReservation(int reservationId);
+
+
 }
