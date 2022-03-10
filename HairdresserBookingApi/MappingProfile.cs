@@ -21,7 +21,8 @@ public class MappingProfile : Profile
 
         CreateMap<Activity, ActivityDetailsDto>();
 
-        CreateMap<WorkerActivity, WorkerActivityDto>();
+        CreateMap<WorkerActivity, WorkerActivityDto>()
+            .ForMember(m => m.WorkerName, c => c.MapFrom(s => $"{s.Worker.FirstName} {s.Worker.LastName}"));
 
         CreateMap<WorkerActivity, AvailableActivityDto>()
             .ForMember(m => m.Name, c => c.MapFrom(s => s.Activity.Name))
