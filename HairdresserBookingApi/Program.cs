@@ -78,6 +78,7 @@ builder.Services.AddScoped<IValidator<LoginUserDto>, LoginUserDtoValidator>();
 builder.Services.AddScoped<IValidator<AddAvailabilityDto>, AddAvailabilityDtoValidator>();
 builder.Services.AddScoped<IValidator<UpdateAvailabilityDto>, UpdateAvailabilityDtoValidator>();
 builder.Services.AddScoped<IValidator<ReservationRequestDto>, ReservationRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<EditReservationDateDto>, EditReservationDateDtoValidator>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddHttpContextAccessor();

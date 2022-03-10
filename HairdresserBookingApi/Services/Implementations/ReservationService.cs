@@ -133,6 +133,37 @@ public class ReservationService : IReservationService
 
     }
 
+    public void EditReservation(int reservationId, EditReservationDateDto editReservationDto)
+    {
+        var reservation = _dbContext
+            .Reservations
+            .FirstOrDefault(r => r.Id == reservationId);
+
+        if (reservation == null) throw new NotFoundException($"Reservation of id: {reservationId} is not found");
+
+        var authorizeResult = _authorizationService.AuthorizeAsync(_userContextService.GetUser()!, reservation,
+            new OperationRequirement(Operation.Update)).Result;
+
+        if (!authorizeResult.Succeeded)
+        {
+            throw new ForbidException($"Don't have rights to change this resource");
+        }
+
+        //check if new date is possible
+        var isPossible = IsAccessible(new ReservationRequestDto
+        {
+            Date = editReservationDto.Date,
+            WorkerActivityId = reservation.WorkerActivityId
+        });
+
+        if (!isPossible) throw new NotAccessibleException($"This time is not accessible");
+
+        reservation.Date = editReservationDto.Date;
+
+        _dbContext.SaveChanges();
+
+    }
+
     private bool IsAccessible(ReservationRequestDto request)
     {
         var possibleTimesInDay = GetAllPossibleTimesInDay(request);

@@ -13,5 +13,7 @@ public interface IReservationService
 
     void DeleteReservation(int reservationId);
 
+    void EditReservation(int reservationId, EditReservationDateDto editReservationDto);
+
 
 }

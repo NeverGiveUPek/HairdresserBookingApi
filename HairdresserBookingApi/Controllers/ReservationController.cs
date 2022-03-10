@@ -62,6 +62,15 @@ public class ReservationController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}")]
+    public ActionResult EditReservation([FromRoute] int id, [FromBody] EditReservationDateDto editReservationDateDto)
+    {
+        _reservationService.EditReservation(id,editReservationDateDto);
+
+        return Ok();
+    }
+
+
 
 
 
