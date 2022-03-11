@@ -39,17 +39,17 @@ public class ReservationController : ControllerBase
     }
 
     [HttpGet("all")]
-    public ActionResult<IEnumerable<ReservationInfoDto>> GetAllReservations()
+    public ActionResult<IEnumerable<ReservationInfoDto>> GetAllUserReservations()
     {
-        var reservationsInfo = _reservationService.GetAllReservations();
+        var reservationsInfo = _reservationService.GetAllUserReservations();
 
         return Ok(reservationsInfo);
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<ReservationInfoDto>> GetFutureReservations()
+    public ActionResult<IEnumerable<ReservationInfoDto>> GetFutureUserReservations()
     {
-        var reservationsInfo = _reservationService.GetFutureReservations();
+        var reservationsInfo = _reservationService.GetFutureUserReservations();
 
         return Ok(reservationsInfo);
     }

@@ -8,8 +8,8 @@ public interface IReservationService
 
     void MakeReservation(ReservationRequestDto request);
 
-    List<ReservationInfoDto> GetAllReservations();
-    List<ReservationInfoDto> GetFutureReservations();
+    List<ReservationInfoDto> GetAllUserReservations();
+    List<ReservationInfoDto> GetFutureUserReservations();
 
     void DeleteReservation(int reservationId);
 

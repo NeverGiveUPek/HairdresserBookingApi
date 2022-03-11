@@ -37,5 +37,23 @@ public class WorkerActivityController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<WorkerActivityDto> GetWorkerActivity([FromRoute] int id)
+    {
+        var result = _workerActivityService.GetWorkerActivity(id);
+
+        return Ok(result);
+    }
+
+
+    [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    public ActionResult CreateWorkerActivity(CreateWorkerActivityDto dto)
+    {
+        var id = _workerActivityService.CreateWorkerActivity(dto);
+
+        return Created($"api/workerActivity/{id}", null);
+    }
+
 
 }

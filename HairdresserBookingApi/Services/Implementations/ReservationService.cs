@@ -86,7 +86,7 @@ public class ReservationService : IReservationService
         _dbContext.SaveChanges();
     }
 
-    public List<ReservationInfoDto> GetAllReservations()
+    public List<ReservationInfoDto> GetAllUserReservations()
     {
         var userId = _userContextService.GetUserId();
         if (userId == null) throw new AppException($"Can't receive userId from Claims");
@@ -98,7 +98,7 @@ public class ReservationService : IReservationService
         return reservationsInfo;
     }
 
-    public List<ReservationInfoDto> GetFutureReservations()
+    public List<ReservationInfoDto> GetFutureUserReservations()
     {
         var userId = _userContextService.GetUserId();
         if (userId == null) throw new AppException($"Can't receive userId from Claims");

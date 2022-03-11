@@ -8,4 +8,6 @@ public interface IWorkerActivityService
 
     List<WorkerActivityDto> GetAllWorkersOfActivity(int activityId);
 
+    WorkerActivityDto GetWorkerActivity(int id);
+    int CreateWorkerActivity(CreateWorkerActivityDto dto);
 }

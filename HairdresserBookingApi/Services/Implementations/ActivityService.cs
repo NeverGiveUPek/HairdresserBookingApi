@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Db;
-using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;

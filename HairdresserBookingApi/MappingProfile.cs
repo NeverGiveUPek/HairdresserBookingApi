@@ -48,5 +48,7 @@ public class MappingProfile : Profile
             .ForMember(r => r.Price, c => c.MapFrom(s => s.WorkerActivity.Price))
             .ForMember(r => r.RequiredMinutes, c => c.MapFrom(s => s.WorkerActivity.RequiredMinutes));
 
+        CreateMap<CreateWorkerActivityDto, WorkerActivity>();
+
     }
 }
