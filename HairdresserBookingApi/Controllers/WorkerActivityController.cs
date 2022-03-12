@@ -55,5 +55,28 @@ public class WorkerActivityController : ControllerBase
         return Created($"api/workerActivity/{id}", null);
     }
 
+    [HttpDelete("{id}")]
+    public ActionResult DeleteWorkerActivity([FromRoute] int id)
+    {
+        _workerActivityService.Delete(id);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/deactivate")]
+    public ActionResult DeactivateWorkerActivity([FromRoute] int id)
+    {
+        _workerActivityService.Deactivate(id);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/activate")]
+    public ActionResult ActivateWorkerActivity([FromRoute] int id)
+    {
+        _workerActivityService.Activate(id);
+
+        return NoContent();
+    }
 
 }

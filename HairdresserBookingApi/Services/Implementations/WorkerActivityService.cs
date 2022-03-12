@@ -94,6 +94,47 @@ public class WorkerActivityService : IWorkerActivityService
         return workerActivity.Id;
     }
 
+    public void Delete(int id)
+    {
+        var workerActivity = _dbContext
+            .WorkerActivities
+            .SingleOrDefault(x => x.Id == id);
 
-    
+        if (workerActivity == null) throw new NotFoundException($"WorkerActivity of Id: {id} is not found");
+
+        var futureReservations = _dbContext.Reservations.Where(r => r.WorkerActivityId == id);
+
+        if (futureReservations.Any())
+            throw new AppException(
+                $"Can't delete WorkerActivity with future reservation, disable WorkerActivity IsActive and wait until reservations execute");
+
+        _dbContext.WorkerActivities.Remove(workerActivity);
+        _dbContext.SaveChanges();
+    }
+
+    public void Deactivate(int id)
+    {
+        var workerActivity = _dbContext
+            .WorkerActivities
+            .SingleOrDefault(x => x.Id == id);
+
+        if (workerActivity == null) throw new NotFoundException($"WorkerActivity of Id: {id} is not found");
+
+        workerActivity.IsActive = false;
+
+        _dbContext.SaveChanges();
+    }
+
+    public void Activate(int id)
+    {
+        var workerActivity = _dbContext
+            .WorkerActivities
+            .SingleOrDefault(x => x.Id == id);
+
+        if (workerActivity == null) throw new NotFoundException($"WorkerActivity of Id: {id} is not found");
+
+        workerActivity.IsActive = true;
+
+        _dbContext.SaveChanges();
+    }
 }

@@ -10,4 +10,9 @@ public interface IWorkerActivityService
 
     WorkerActivityDto GetWorkerActivity(int id);
     int CreateWorkerActivity(CreateWorkerActivityDto dto);
+
+    void Delete(int id);
+
+    void Deactivate(int id);
+    void Activate(int id);
 }
