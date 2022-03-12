@@ -11,7 +11,10 @@ public class WorkerActivity
     public double Price { get; set; }
     [Required]
     public int RequiredMinutes { get; set; }
-    
+
+    [Required] 
+    public bool IsActive { get; set; } = true;
+
     [Required]
     public int WorkerId { get; set; }
     public virtual Worker Worker { get; set; }

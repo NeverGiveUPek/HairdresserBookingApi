@@ -42,6 +42,8 @@ public class ReservationService : IReservationService
         if (workerActivity == null)
             throw new NotFoundException($"Worker activity of id {request.WorkerActivityId} is not found in database");
 
+        if (!workerActivity.IsActive) throw new AppException($"WorkerActivity is not active");
+
 
         var accessibilityList = AccessibilityInDay(request.Date.Date, workerActivity.WorkerId);
 
@@ -68,6 +70,14 @@ public class ReservationService : IReservationService
         var isAccessible = IsAccessible(request);
 
         if (!isAccessible) throw new NotAccessibleException($"Reservation can't be in this time");
+
+        var workerActivity = _dbContext.WorkerActivities.SingleOrDefault(x => x.Id == request.WorkerActivityId);
+
+        if (workerActivity == null)
+            throw new NotFoundException($"WorkerActivity of Id: {request.WorkerActivityId} is not found");
+
+        if (!workerActivity.IsActive) throw new AppException($"WorkerActivity is not active");
+
         
         var userId = _userContextService.GetUserId();
         if (userId == null) throw new AppException($"Can't receive userId from Claims");

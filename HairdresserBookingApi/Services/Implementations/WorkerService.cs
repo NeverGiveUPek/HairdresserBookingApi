@@ -4,6 +4,7 @@ using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;
 using HairdresserBookingApi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserBookingApi.Services.Implementations;
 
@@ -74,6 +75,9 @@ public class WorkerService : IWorkerService
     {
         var foundWorker = _dbContext
             .Workers
+            .Include(x => x.Availabilities)
+            .Include(x => x.WorkerActivity)
+            .ThenInclude(wa => wa.Reservations)
             .FirstOrDefault(w => w.Id == id);
 
         if (foundWorker == null) throw new NotFoundException($"Worker of id: {id} is not found");

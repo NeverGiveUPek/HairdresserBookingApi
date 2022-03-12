@@ -29,11 +29,12 @@ public class WorkerActivityService : IWorkerActivityService
         var worker = _dbContext
             .Workers
             .Include(w => w.WorkerActivity)
+            .ThenInclude(wa => wa.Activity)
             .SingleOrDefault(w => w.Id == workerId);
 
         if (worker == null) throw new NotFoundException($"Worker of Id: {workerId} is not found");
 
-        var workerActivities = worker.WorkerActivity;
+        var workerActivities = worker.WorkerActivity.Where(x => x.IsActive);
 
         var workerActivitiesDto = _mapper.Map<List<WorkerActivityDto>>(workerActivities);
 
@@ -45,11 +46,12 @@ public class WorkerActivityService : IWorkerActivityService
         var activity = _dbContext
             .Activities
             .Include(a => a.WorkerActivity)
+            .ThenInclude(wa => wa.Worker)
             .SingleOrDefault(a => a.Id == activityId);
 
         if (activity == null) throw new NotFoundException($"Activity of Id: {activityId} is not found");
 
-        var workerActivities = activity.WorkerActivity;
+        var workerActivities = activity.WorkerActivity.Where(x => x.IsActive);
 
         var workerActivitiesDto = _mapper.Map<List<WorkerActivityDto>>(workerActivities);
 
@@ -59,7 +61,7 @@ public class WorkerActivityService : IWorkerActivityService
 
     public WorkerActivityDto GetWorkerActivity(int id)
     {
-        var workerActivity = _dbContext.WorkerActivities.SingleOrDefault(wa => wa.Id == id);
+        var workerActivity = _dbContext.WorkerActivities.SingleOrDefault(wa => wa.Id == id && wa.IsActive);
 
         if (workerActivity == null) throw new NotFoundException($"WorkerActivity of Id: {id} is not found");
 
@@ -91,4 +93,7 @@ public class WorkerActivityService : IWorkerActivityService
 
         return workerActivity.Id;
     }
+
+
+    
 }

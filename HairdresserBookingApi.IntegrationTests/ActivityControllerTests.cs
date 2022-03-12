@@ -7,7 +7,6 @@ using FluentAssertions;
 using HairdresserBookingApi.IntegrationTests.Helpers;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Activity;
-using HairdresserBookingApi.Models.Dto.ActivityDto;
 using HairdresserBookingApi.Models.Entities.Api;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

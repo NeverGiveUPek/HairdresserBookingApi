@@ -38,6 +38,7 @@ public class ActivityService : IActivityService
         var availableServices = _dbContext
             .WorkerActivities
             .Include(ws => ws.Activity)
+            .Where(wa => wa.IsActive == true)
             .ToList();
 
         var availableCheapestServices = availableServices
@@ -61,6 +62,8 @@ public class ActivityService : IActivityService
             .SingleOrDefault(a => a.Id == id);
 
         if (activity == null) throw new NotFoundException($"Activity of id: {id} is not found");
+
+        activity.WorkerActivity = (ICollection<WorkerActivity>) activity.WorkerActivity.Where(x => x.IsActive == true);
 
         var activityDetailsDto = _mapper.Map<ActivityDetailsDto>(activity);
 
@@ -95,6 +98,7 @@ public class ActivityService : IActivityService
             .SingleOrDefault(a => a.Id == id);
 
         if (activity == null) throw new NotFoundException($"Activity of id: {id} is not found");
+
 
         _dbContext.Activities.Remove(activity);
         _dbContext.SaveChanges();

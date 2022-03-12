@@ -9,7 +9,6 @@ public class WorkerActivityDto
     public int RequiredMinutes { get; set; }
     public int WorkerId { get; set; }
     public string? WorkerName { get; set; }
-    
     public int ActivityId { get; set; }
     public string? ActivityName { get; set; }
 
