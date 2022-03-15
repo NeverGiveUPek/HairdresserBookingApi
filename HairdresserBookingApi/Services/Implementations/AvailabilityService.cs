@@ -122,6 +122,41 @@ public class AvailabilityService : IAvailabilityService
         return availabilityInDayDto;
     }
 
+    public void AddAvailabilityInPeriod(PeriodAvailabilityDto periodAvailabilityDto, int workerId)
+    {
+        var worker = GetWorker(workerId);
+        if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
+
+        var availabilitiesToAdd = new List<Availability>();
+        
+        var workDuration = periodAvailabilityDto.EndDate.TimeOfDay - periodAvailabilityDto.StartDate.TimeOfDay;
+
+        while (periodAvailabilityDto.StartDate.Day <= periodAvailabilityDto.EndDate.Day)
+        {
+            availabilitiesToAdd.Add(new Availability()
+            {
+                Start = periodAvailabilityDto.StartDate,
+                End = periodAvailabilityDto.StartDate.Add(workDuration),
+                WorkerId = workerId
+            });
+            periodAvailabilityDto.StartDate = periodAvailabilityDto.StartDate.AddDays(1);
+        }
+
+
+        foreach (var element in availabilitiesToAdd)
+        {
+            var foundAvailability = _dbContext.Availabilities.FirstOrDefault(a => a.Start.Day == element.Start.Day && a.WorkerId == element.WorkerId);
+            if (foundAvailability == null)
+            {
+                _dbContext.Availabilities.Add(element);
+            }
+        }
+
+        _dbContext.SaveChanges();
+
+
+    }
+
 
     private Worker? GetWorker(int workerId)
     {

@@ -56,6 +56,7 @@ public class WorkerActivityController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult DeleteWorkerActivity([FromRoute] int id)
     {
         _workerActivityService.Delete(id);
@@ -64,6 +65,7 @@ public class WorkerActivityController : ControllerBase
     }
 
     [HttpPut("{id}/deactivate")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult DeactivateWorkerActivity([FromRoute] int id)
     {
         _workerActivityService.Deactivate(id);
@@ -72,6 +74,7 @@ public class WorkerActivityController : ControllerBase
     }
 
     [HttpPut("{id}/activate")]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult ActivateWorkerActivity([FromRoute] int id)
     {
         _workerActivityService.Activate(id);

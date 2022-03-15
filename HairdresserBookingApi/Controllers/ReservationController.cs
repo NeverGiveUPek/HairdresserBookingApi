@@ -22,7 +22,7 @@ public class ReservationController : ControllerBase
 
     
     [HttpGet("day")]
-    public ActionResult GetAllPossibleTimesInDay([FromQuery] ReservationRequestDto reservationRequest)
+    public ActionResult<List<TimeRange>> GetAllPossibleTimesInDay([FromQuery] ReservationRequestDto reservationRequest)
     {
         var allPossibleTimes = _reservationService.GetAllPossibleTimesInDay(reservationRequest);
 

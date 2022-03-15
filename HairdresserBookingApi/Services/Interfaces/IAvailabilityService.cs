@@ -13,4 +13,6 @@ public interface IAvailabilityService
     void Update(int id, int workerId, UpdateAvailabilityDto dto);
 
     AvailabilityDto? AvailabilityInDay(DateTime date, int workerId);
+
+    void AddAvailabilityInPeriod(PeriodAvailabilityDto periodAvailabilityDto, int workerId);
 }

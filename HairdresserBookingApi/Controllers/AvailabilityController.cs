@@ -8,7 +8,7 @@ namespace HairdresserBookingApi.Controllers;
 
 
 [ApiController]
-[Authorize(Roles = "Admin, Manager")]
+//[Authorize(Roles = "Admin, Manager")]
 [Route("api/worker/{workerId}/availability")]
 public class AvailabilityController : ControllerBase
 {
@@ -59,5 +59,14 @@ public class AvailabilityController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("period")]
+    public ActionResult AddPeriodAvailability([FromBody] PeriodAvailabilityDto dto, [FromRoute] int workerId)
+    {
+        _availabilityService.AddAvailabilityInPeriod(dto, workerId);
+
+        return Created($"api/worker/{workerId}/availability/current", null);
+    }
+
 
 }
