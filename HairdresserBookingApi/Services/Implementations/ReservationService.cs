@@ -181,6 +181,23 @@ public class ReservationService : IReservationService
 
     public ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement)
     {
+
+        IReservationSelectorStrategy strategy;
+
+        switch (requirement.PickStrategy)
+        {
+            case PickStrategy.FAST:
+                strategy = new FastestReservationSelectorStrategy();
+                break;
+            case PickStrategy.EARLY:
+                strategy = new EarliestReservationSelectorStrategy();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+
+
         var accessibility = new List<TimeRange>();
 
         while (requirement.TimeRange.StartDate.Date <= requirement.TimeRange.EndDate.Date)
@@ -196,7 +213,7 @@ public class ReservationService : IReservationService
 
         
 
-        var bestTime = _reservationSelector.FindBestTime(accessibility);
+        var bestTime = strategy.FindBestTime(accessibility);
 
         if (bestTime is null) throw new NotAccessibleException($"There aren't any possible times to make reservation");
 

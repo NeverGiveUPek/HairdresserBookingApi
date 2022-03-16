@@ -31,10 +31,9 @@ public class ReservationController : ControllerBase
         return Ok(allPossibleTimes);
     }
 
-    [HttpGet("fast")]
-    public ActionResult<ReservationRequestDto> GetFastestPossibleReservation([FromQuery] ReservationRequirementDto requirement)
+    [HttpGet("pick")]
+    public ActionResult<ReservationRequestDto> PickReservation([FromQuery] ReservationRequirementDto requirement)
     {
-        
         var reservationRequestDto = _reservationService.FindBestReservation(requirement);
 
         return Ok(reservationRequestDto);
