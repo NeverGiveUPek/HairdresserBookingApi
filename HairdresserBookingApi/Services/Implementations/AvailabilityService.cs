@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;
 using HairdresserBookingApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using TimeRange = HairdresserBookingApi.Models.Dto.Helper.TimeRange;
 
 namespace HairdresserBookingApi.Services.Implementations;
 
@@ -122,24 +124,24 @@ public class AvailabilityService : IAvailabilityService
         return availabilityInDayDto;
     }
 
-    public void AddAvailabilityInPeriod(PeriodAvailabilityDto periodAvailabilityDto, int workerId)
+    public void AddAvailabilityInPeriod(TimeRange timeRange, int workerId)
     {
         var worker = GetWorker(workerId);
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
         var availabilitiesToAdd = new List<Availability>();
         
-        var workDuration = periodAvailabilityDto.EndDate.TimeOfDay - periodAvailabilityDto.StartDate.TimeOfDay;
+        var workDuration = timeRange.EndDate.TimeOfDay - timeRange.StartDate.TimeOfDay;
 
-        while (periodAvailabilityDto.StartDate.Day <= periodAvailabilityDto.EndDate.Day)
+        while (timeRange.StartDate.Date <= timeRange.EndDate.Date)
         {
             availabilitiesToAdd.Add(new Availability()
             {
-                Start = periodAvailabilityDto.StartDate,
-                End = periodAvailabilityDto.StartDate.Add(workDuration),
+                Start = timeRange.StartDate,
+                End = timeRange.StartDate.Add(workDuration),
                 WorkerId = workerId
             });
-            periodAvailabilityDto.StartDate = periodAvailabilityDto.StartDate.AddDays(1);
+            timeRange.StartDate = timeRange.StartDate.AddDays(1);
         }
 
 

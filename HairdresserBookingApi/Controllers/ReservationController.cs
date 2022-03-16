@@ -1,7 +1,9 @@
-﻿using HairdresserBookingApi.Models.Dto.Reservation;
+﻿using HairdresserBookingApi.Models.Dto.Helper;
+using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserBookingApi.Controllers;
 
@@ -10,7 +12,7 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/reservation")]
-[Authorize]
+//[Authorize]
 public class ReservationController : ControllerBase
 {
     private readonly IReservationService _reservationService;
@@ -27,6 +29,15 @@ public class ReservationController : ControllerBase
         var allPossibleTimes = _reservationService.GetAllPossibleTimesInDay(reservationRequest);
 
         return Ok(allPossibleTimes);
+    }
+
+    [HttpGet("fast")]
+    public ActionResult<ReservationRequestDto> GetFastestPossibleReservation([FromQuery] ReservationRequirementDto requirement)
+    {
+        
+        var reservationRequestDto = _reservationService.FindBestReservation(requirement);
+
+        return Ok(reservationRequestDto);
     }
 
 

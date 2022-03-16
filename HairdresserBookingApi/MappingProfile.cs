@@ -2,12 +2,14 @@
 using HairdresserBookingApi.Models.Dto;
 using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Dto.WorkerActivity;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Entities.Users;
+using TimeRange = HairdresserBookingApi.Models.Dto.Helper.TimeRange;
 
 namespace HairdresserBookingApi;
 
@@ -49,6 +51,8 @@ public class MappingProfile : Profile
             .ForMember(r => r.RequiredMinutes, c => c.MapFrom(s => s.WorkerActivity.RequiredMinutes));
 
         CreateMap<CreateWorkerActivityDto, WorkerActivity>();
+
+       
 
     }
 }

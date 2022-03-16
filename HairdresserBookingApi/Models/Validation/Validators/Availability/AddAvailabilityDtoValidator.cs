@@ -12,7 +12,7 @@ public class AddAvailabilityDtoValidator : AbstractValidator<AddAvailabilityDto>
             .NotEmpty()
             .Custom((value, context) =>
             {
-                if (!DateTimeHelper.IsDateInFuture(value)) context.AddFailure("Date should be in future");
+                if (!DateTimeHelper.IsDatePresent(value)) context.AddFailure("Date should be in future");
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
             });
 
@@ -21,7 +21,7 @@ public class AddAvailabilityDtoValidator : AbstractValidator<AddAvailabilityDto>
             .GreaterThan(a => a.Start)
             .Custom((value, context) =>
             {
-                if (!DateTimeHelper.IsDateInFuture(value)) context.AddFailure("Date should be in future");
+                if (!DateTimeHelper.IsDatePresent(value)) context.AddFailure("Date should be in future");
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
             });
 

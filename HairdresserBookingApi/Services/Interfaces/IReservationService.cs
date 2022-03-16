@@ -1,4 +1,6 @@
-﻿using HairdresserBookingApi.Models.Dto.Reservation;
+﻿using HairdresserBookingApi.Models.Dto.Helper;
+using HairdresserBookingApi.Models.Dto.Reservation;
+
 
 namespace HairdresserBookingApi.Services.Interfaces;
 
@@ -15,5 +17,5 @@ public interface IReservationService
 
     void EditReservation(int reservationId, EditReservationDateDto editReservationDto);
 
-
+    ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement);
 }

@@ -2,9 +2,14 @@
 
 public static class DateTimeHelper
 {
-    public static bool IsDateInFuture(DateTime dateTime)
+    public static bool IsDatePresent(DateTime dateTime)
     {
         return dateTime.Date >= DateTime.Now.Date;
+    }
+
+    public static bool IsDateTimeInFuture(DateTime dateTime)
+    {
+        return dateTime > DateTime.Now;
     }
 
     public static bool HasMinimumTimeSpanAsCertainMinutes(DateTime dateTime, int minuteSpan)

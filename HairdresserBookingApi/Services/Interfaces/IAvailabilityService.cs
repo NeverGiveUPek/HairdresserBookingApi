@@ -1,5 +1,7 @@
 ﻿using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Dto.Reservation;
+
 
 namespace HairdresserBookingApi.Services.Interfaces;
 
@@ -14,5 +16,5 @@ public interface IAvailabilityService
 
     AvailabilityDto? AvailabilityInDay(DateTime date, int workerId);
 
-    void AddAvailabilityInPeriod(PeriodAvailabilityDto periodAvailabilityDto, int workerId);
+    void AddAvailabilityInPeriod(TimeRange timeRange, int workerId);
 }

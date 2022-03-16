@@ -1,4 +1,5 @@
 ﻿using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Entities.Users;
 using HairdresserBookingApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -60,10 +61,10 @@ public class AvailabilityController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("period")]
-    public ActionResult AddPeriodAvailability([FromBody] PeriodAvailabilityDto dto, [FromRoute] int workerId)
+    [HttpPost("timeRange")]
+    public ActionResult AddPeriodAvailability([FromBody] TimeRange timeRange, [FromRoute] int workerId)
     {
-        _availabilityService.AddAvailabilityInPeriod(dto, workerId);
+        _availabilityService.AddAvailabilityInPeriod(timeRange, workerId);
 
         return Created($"api/worker/{workerId}/availability/current", null);
     }

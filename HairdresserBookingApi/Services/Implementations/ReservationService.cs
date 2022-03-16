@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using HairdresserBookingApi.Authorization;
 using HairdresserBookingApi.Models.Db;
+using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Entities.Api;
 using HairdresserBookingApi.Models.Exceptions;
 using HairdresserBookingApi.Services.Interfaces;
+using HairdresserBookingApi.Services.Strategies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace HairdresserBookingApi.Services.Implementations;
 
@@ -19,6 +20,8 @@ public class ReservationService : IReservationService
     private readonly IAvailabilityService _availabilityService;
     private readonly IAuthorizationService _authorizationService;
 
+    private readonly IReservationSelectorStrategy _reservationSelector;
+
     public ReservationService(BookingDbContext dbContext, IMapper mapper, IUserContextService userContextService, IAvailabilityService availabilityService, IAuthorizationService authorizationService)
     {
         _dbContext = dbContext;
@@ -26,6 +29,8 @@ public class ReservationService : IReservationService
         _userContextService = userContextService;
         _availabilityService = availabilityService;
         _authorizationService = authorizationService;
+
+        _reservationSelector = new FastestReservationSelectorStrategy();
     }
 
 
@@ -53,9 +58,9 @@ public class ReservationService : IReservationService
 
         foreach (var timeRange in accessibilityList)
         {
-            if(timeRange.From <= timeRange.To.AddMinutes(-1 * workerActivity.RequiredMinutes))
+            if(timeRange.StartDate <= timeRange.EndDate.AddMinutes(-1 * workerActivity.RequiredMinutes))
             {
-                possibleTimes.Add(new TimeRange(timeRange.From, timeRange.To.AddMinutes(-1 * workerActivity.RequiredMinutes)));
+                possibleTimes.Add(new TimeRange(timeRange.StartDate, timeRange.EndDate.AddMinutes(-1 * workerActivity.RequiredMinutes)));
             }
         }
 
@@ -174,13 +179,43 @@ public class ReservationService : IReservationService
 
     }
 
+    public ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement)
+    {
+        var accessibility = new List<TimeRange>();
+
+        while (requirement.TimeRange.StartDate.Date <= requirement.TimeRange.EndDate.Date)
+        {
+            accessibility.AddRange(GetAllPossibleTimesInDay(new ReservationRequestDto()
+            {
+                Date = requirement.TimeRange.StartDate,
+                WorkerActivityId = requirement.WorkerActivityId
+            }));
+
+            requirement.TimeRange.StartDate = requirement.TimeRange.StartDate.AddDays(1);
+        }
+
+        
+
+        var bestTime = _reservationSelector.FindBestTime(accessibility);
+
+        if (bestTime is null) throw new NotAccessibleException($"There aren't any possible times to make reservation");
+
+        var reservationRequest = new ReservationRequestDto()
+        {
+            Date = bestTime.Value,
+            WorkerActivityId = requirement.WorkerActivityId
+        };
+
+        return reservationRequest;
+    }
+
     private bool IsAccessible(ReservationRequestDto request)
     {
         var possibleTimesInDay = GetAllPossibleTimesInDay(request);
 
         foreach (var timeRange in possibleTimesInDay)
         {
-            if (request.Date >= timeRange.From && request.Date <= timeRange.To)
+            if (request.Date >= timeRange.StartDate && request.Date <= timeRange.EndDate)
             {
                 return true;
             }
@@ -222,9 +257,9 @@ public class ReservationService : IReservationService
 
         for (int i = list.Count - 1; i > 0 ; i--)
         {
-            if (list[i].From == list[i - 1].To)
+            if (list[i].StartDate == list[i - 1].EndDate)
             {
-                list[i-1].To = list[i].To;
+                list[i-1].EndDate = list[i].EndDate;
                 list.RemoveAt(i);
             }
         }
@@ -237,14 +272,14 @@ public class ReservationService : IReservationService
 
         if (list.Count > 0)
         {
-            accessibilityList.Add(new TimeRange(workerAvailability.Start, list[0].From));
+            accessibilityList.Add(new TimeRange(workerAvailability.Start, list[0].StartDate));
 
             for (int i = 0; i < list.Count - 1; i++)
             {
-                accessibilityList.Add(new TimeRange(list[i].To, list[i + 1].From));
+                accessibilityList.Add(new TimeRange(list[i].EndDate, list[i + 1].StartDate));
             }
 
-            accessibilityList.Add(new TimeRange(list[^1].To, workerAvailability.End)); //[^1] - first from the end 
+            accessibilityList.Add(new TimeRange(list[^1].EndDate, workerAvailability.End)); //[^1] - first from the end 
         }
         else
         {
