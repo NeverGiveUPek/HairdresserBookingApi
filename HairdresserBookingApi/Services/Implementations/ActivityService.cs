@@ -14,11 +14,13 @@ public class ActivityService : IActivityService
 
     private readonly BookingDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly ILogger<ActivityService> _logger;
 
-    public ActivityService(BookingDbContext dbContext, IMapper mapper)
+    public ActivityService(BookingDbContext dbContext, IMapper mapper, ILogger<ActivityService> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _logger = logger;
     }
 
 
@@ -92,6 +94,8 @@ public class ActivityService : IActivityService
 
     public void Delete(int id)
     {
+        _logger.LogWarning($"DELETE action for Activity of id: {id}");
+
         var activity = _dbContext
             .Activities
             .Include(a => a.WorkerActivity)

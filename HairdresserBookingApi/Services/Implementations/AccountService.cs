@@ -21,14 +21,16 @@ public class AccountService : IAccountService
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly AuthenticationSettings _authenticationSettings;
     private readonly IUserContextService _userContextService;
+    private readonly ILogger<AccountService> _logger;
 
-    public AccountService(IMapper mapper, BookingDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IUserContextService userContextService)
+    public AccountService(IMapper mapper, BookingDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IUserContextService userContextService, ILogger<AccountService> logger)
     {
         _mapper = mapper;
         _dbContext = dbContext;
         _passwordHasher = passwordHasher;
         _authenticationSettings = authenticationSettings;
         _userContextService = userContextService;
+        _logger = logger;
     }
 
 

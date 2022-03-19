@@ -12,12 +12,14 @@ public class WorkerService : IWorkerService
 {
     private readonly BookingDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly ILogger<WorkerService> _logger;
 
 
-    public WorkerService(BookingDbContext dbContext, IMapper mapper)
+    public WorkerService(BookingDbContext dbContext, IMapper mapper, ILogger<WorkerService> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public List<WorkerDto> GetAll()
@@ -73,6 +75,8 @@ public class WorkerService : IWorkerService
 
     public void Delete(int id)
     {
+        _logger.LogWarning($"DELETE action for worker of id: {id}");
+
         var foundWorker = _dbContext
             .Workers
             .Include(x => x.Availabilities)

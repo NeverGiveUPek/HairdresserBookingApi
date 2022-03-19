@@ -15,11 +15,13 @@ public class AvailabilityService : IAvailabilityService
 {
     private readonly BookingDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly ILogger<AvailabilityService> _logger;
 
-    public AvailabilityService(BookingDbContext dbContext, IMapper mapper)
+    public AvailabilityService(BookingDbContext dbContext, IMapper mapper, ILogger<AvailabilityService> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _logger = logger;
     }
 
 
@@ -74,6 +76,8 @@ public class AvailabilityService : IAvailabilityService
 
     public void Delete(int id, int workerId)
     {
+        _logger.LogWarning($"DELETE action for availability of id: {id}");
+
         var worker = GetWorker(workerId);
 
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");

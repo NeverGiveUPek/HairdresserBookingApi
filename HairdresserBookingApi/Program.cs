@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,6 +86,12 @@ builder.Services.AddScoped<IValidator<ReservationRequirementDto>, ReservationReq
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddHttpContextAccessor();
+
+// NLog: Setup NLog for Dependency injection
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog();
+
 
 var app = builder.Build();
 

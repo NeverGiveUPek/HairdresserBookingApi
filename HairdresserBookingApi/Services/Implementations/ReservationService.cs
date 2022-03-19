@@ -21,14 +21,16 @@ public class ReservationService : IReservationService
     private readonly IAuthorizationService _authorizationService;
 
     private readonly IReservationSelectorStrategy _reservationSelector;
+    private readonly ILogger<ReservationService> _logger;
 
-    public ReservationService(BookingDbContext dbContext, IMapper mapper, IUserContextService userContextService, IAvailabilityService availabilityService, IAuthorizationService authorizationService)
+    public ReservationService(BookingDbContext dbContext, IMapper mapper, IUserContextService userContextService, IAvailabilityService availabilityService, IAuthorizationService authorizationService, ILogger<ReservationService> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;
         _userContextService = userContextService;
         _availabilityService = availabilityService;
         _authorizationService = authorizationService;
+        _logger = logger;
 
         _reservationSelector = new FastestReservationSelectorStrategy();
     }
@@ -127,6 +129,8 @@ public class ReservationService : IReservationService
 
     public void DeleteReservation(int reservationId)
     {
+        _logger.LogWarning($"DELETE action for reservation of id: {reservationId}");
+
         var reservation = _dbContext
             .Reservations
             .FirstOrDefault(r => r.Id == reservationId);

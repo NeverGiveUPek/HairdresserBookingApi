@@ -14,13 +14,14 @@ public class WorkerActivityService : IWorkerActivityService
 
     private readonly BookingDbContext _dbContext;
     private readonly IMapper _mapper;
-    private readonly IUserContextService _userContextService;
+    private readonly ILogger<WorkerActivityService> _logger;
 
-    public WorkerActivityService(BookingDbContext dbContext, IMapper mapper, IUserContextService userContextService)
+
+    public WorkerActivityService(BookingDbContext dbContext, IMapper mapper, ILogger<WorkerActivityService> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;
-        _userContextService = userContextService;
+        _logger = logger;
     }
 
 
@@ -96,6 +97,8 @@ public class WorkerActivityService : IWorkerActivityService
 
     public void Delete(int id)
     {
+        _logger.LogWarning($"DELETE action for workerActivity of id: {id}");
+
         var workerActivity = _dbContext
             .WorkerActivities
             .SingleOrDefault(x => x.Id == id);
