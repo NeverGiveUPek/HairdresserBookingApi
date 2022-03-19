@@ -33,7 +33,6 @@
     <Folder Include="Models\Validation\Attributes\" />
     <Folder Include="Helpers\" />
     <Folder Include="Authorization\" />
-    <Folder Include="Services\Strategies\" />
   </ItemGroup>
 
   <ItemGroup>

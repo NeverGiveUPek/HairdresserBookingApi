@@ -182,15 +182,19 @@ public class ReservationService : IReservationService
     public ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement)
     {
 
+        
         IReservationSelectorStrategy strategy;
 
         switch (requirement.PickStrategy)
         {
-            case PickStrategy.FAST:
+            case PickStrategy.Fast:
                 strategy = new FastestReservationSelectorStrategy();
                 break;
-            case PickStrategy.EARLY:
+            case PickStrategy.Early:
                 strategy = new EarliestReservationSelectorStrategy();
+                break;
+            case PickStrategy.MostAccessible:
+                strategy = new MostAccessibleTimeReservationSelectorStrategy();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -2,6 +2,7 @@
 
 public enum PickStrategy
 {
-    FAST,
-    EARLY
+    Fast,
+    Early,
+    MostAccessible
 }
