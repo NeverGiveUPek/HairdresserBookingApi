@@ -10,4 +10,5 @@ public interface IAccountService
 
     void ChangeRole(string role, int id);
 
+    void RemoveAccount();
 }

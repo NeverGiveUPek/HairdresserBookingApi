@@ -11,8 +11,8 @@ public class OperationRequirementHandler : AuthorizationHandler<OperationRequire
     {
         if(requirement.Operation is Operation.Read or Operation.Create) context.Succeed(requirement);
 
-        //if (reservation.Date < DateTime.Now.AddHours(2)) return Task.CompletedTask;
-        
+        if (reservation.Date < DateTime.Now.AddHours(2)) return Task.CompletedTask;
+
         var userId = context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         if (reservation.UserId == int.Parse(userId)) context.Succeed(requirement);
 

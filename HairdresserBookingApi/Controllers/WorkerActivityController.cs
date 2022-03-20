@@ -8,7 +8,7 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/workerActivity")]
-//[Authorize]
+[Authorize]
 public class WorkerActivityController : ControllerBase
 {
     private readonly IWorkerActivityService _workerActivityService;

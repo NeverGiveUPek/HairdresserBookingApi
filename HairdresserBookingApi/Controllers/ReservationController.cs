@@ -12,7 +12,7 @@ namespace HairdresserBookingApi.Controllers;
 
 [ApiController]
 [Route("api/reservation")]
-//[Authorize]
+[Authorize]
 public class ReservationController : ControllerBase
 {
     private readonly IReservationService _reservationService;

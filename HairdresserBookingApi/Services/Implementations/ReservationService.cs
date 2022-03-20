@@ -137,18 +137,23 @@ public class ReservationService : IReservationService
 
         if (reservation == null) throw new NotFoundException($"Reservation of id: {reservationId} is not found");
 
-        var authorizeResult = _authorizationService.AuthorizeAsync(_userContextService.GetUser()!, reservation,
-            new OperationRequirement(Operation.Delete)).Result;
+        var role = _userContextService.GetUserRole();
 
-        if (!authorizeResult.Succeeded)
+        if( role == null) throw new ForbidException($"Don't have rights to change this resource");
+
+        var authorizeResult = _authorizationService.AuthorizeAsync(_userContextService.GetUser()!, reservation,
+                new OperationRequirement(Operation.Delete)).Result;
+
+
+        if (role != "Admin" && role != "Manager" && !authorizeResult.Succeeded)
         {
             throw new ForbidException($"Don't have rights to change this resource");
         }
-
-
+        
 
         _dbContext.Reservations.Remove(reservation);
         _dbContext.SaveChanges();
+
 
     }
 

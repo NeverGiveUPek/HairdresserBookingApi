@@ -9,7 +9,7 @@ namespace HairdresserBookingApi.Controllers;
 
 
 [ApiController]
-//[Authorize(Roles = "Admin, Manager")]
+[Authorize(Roles = "Admin, Manager")]
 [Route("api/worker/{workerId}/availability")]
 public class AvailabilityController : ControllerBase
 {

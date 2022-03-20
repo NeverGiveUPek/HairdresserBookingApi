@@ -44,4 +44,13 @@ public class AccountController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete]
+    public ActionResult RemoveAccount()
+    {
+        _accountService.RemoveAccount();
+
+        return NoContent();
+    }
+
 }

@@ -119,4 +119,17 @@ public class AccountService : IAccountService
         changeUser.Role = foundRole;
         _dbContext.SaveChanges();
     }
+
+    public void RemoveAccount()
+    {
+        var userId = _userContextService.GetUserId();
+
+        if (userId == null) throw new NotFoundException($"User to delete is not found");
+
+        var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+
+        if (user == null) throw new NotFoundException($"User to delete is not found");
+
+        _dbContext.Users.Remove(user);
+    }
 }
