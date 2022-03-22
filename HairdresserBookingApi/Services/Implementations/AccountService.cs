@@ -107,7 +107,6 @@ public class AccountService : IAccountService
 
         if (changeUser == null) throw new NotFoundException($"User of id {id} is not found");
 
-        
         switch (currentUserRole)
         {
             case "Manager" when changeUser.Role.Name is "Manager" or "Admin":
@@ -115,6 +114,13 @@ public class AccountService : IAccountService
             case "Admin" when changeUser.Role.Name == "Admin":
                 throw new ForbidException($"You can't change user of id {id} role");
         }
+
+        switch (currentUserRole)
+        {
+            case "Manager" when foundRole.Name == "Admin":
+                throw new ForbidException($"You can't change user of id {id} to {foundRole.Name}");
+        }
+
 
         changeUser.Role = foundRole;
         _dbContext.SaveChanges();
@@ -131,5 +137,6 @@ public class AccountService : IAccountService
         if (user == null) throw new NotFoundException($"User to delete is not found");
 
         _dbContext.Users.Remove(user);
+        _dbContext.SaveChanges();
     }
 }

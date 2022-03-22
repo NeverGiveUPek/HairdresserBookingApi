@@ -65,7 +65,8 @@ public class ActivityService : IActivityService
 
         if (activity == null) throw new NotFoundException($"Activity of id: {id} is not found");
 
-        activity.WorkerActivity = (ICollection<WorkerActivity>) activity.WorkerActivity.Where(x => x.IsActive == true);
+        
+        activity.WorkerActivity = activity.WorkerActivity.Where(x => x.IsActive).ToList();
 
         var activityDetailsDto = _mapper.Map<ActivityDetailsDto>(activity);
 
@@ -99,6 +100,7 @@ public class ActivityService : IActivityService
         var activity = _dbContext
             .Activities
             .Include(a => a.WorkerActivity)
+            .ThenInclude(wa => wa.Reservations)
             .SingleOrDefault(a => a.Id == id);
 
         if (activity == null) throw new NotFoundException($"Activity of id: {id} is not found");

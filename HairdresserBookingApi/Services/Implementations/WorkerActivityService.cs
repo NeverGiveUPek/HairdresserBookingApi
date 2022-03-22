@@ -62,7 +62,11 @@ public class WorkerActivityService : IWorkerActivityService
 
     public WorkerActivityDto GetWorkerActivity(int id)
     {
-        var workerActivity = _dbContext.WorkerActivities.SingleOrDefault(wa => wa.Id == id && wa.IsActive);
+        var workerActivity = _dbContext
+            .WorkerActivities
+            .Include(x => x.Activity)
+            .Include(x => x.Worker)
+            .SingleOrDefault(wa => wa.Id == id && wa.IsActive);
 
         if (workerActivity == null) throw new NotFoundException($"WorkerActivity of Id: {id} is not found");
 

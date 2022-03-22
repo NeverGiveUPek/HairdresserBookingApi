@@ -63,6 +63,8 @@ public class AvailabilityService : IAvailabilityService
         {
             sameTimeAvailability.Start = dto.Start;
             sameTimeAvailability.End = dto.End;
+
+            _dbContext.SaveChanges();
             return;
         }
 
@@ -84,7 +86,7 @@ public class AvailabilityService : IAvailabilityService
 
         var availabilityToDelete = worker.Availabilities.SingleOrDefault(a => a.Id == id);
 
-        if (availabilityToDelete == null) throw new NotFoundException($"Availability of this id is not found");
+        if (availabilityToDelete == null) throw new NotFoundException($"Availability of id: {id} is not found");
 
         _dbContext.Availabilities.Remove(availabilityToDelete);
         _dbContext.SaveChanges();
@@ -128,7 +130,7 @@ public class AvailabilityService : IAvailabilityService
         return availabilityInDayDto;
     }
 
-    public void AddAvailabilityInPeriod(TimeRange timeRange, int workerId)
+    public void AddAvailabilityInPeriod(TimeRangeAvailabilityDto timeRange, int workerId)
     {
         var worker = GetWorker(workerId);
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");

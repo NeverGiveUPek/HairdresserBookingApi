@@ -7,6 +7,7 @@ using HairdresserBookingApi.Middleware;
 using HairdresserBookingApi.Models.Authentication;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Availability;
+using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Dto.User;
 using HairdresserBookingApi.Models.Entities.Users;
@@ -83,6 +84,7 @@ builder.Services.AddScoped<IValidator<UpdateAvailabilityDto>, UpdateAvailability
 builder.Services.AddScoped<IValidator<ReservationRequestDto>, ReservationRequestDtoValidator>();
 builder.Services.AddScoped<IValidator<EditReservationDateDto>, EditReservationDateDtoValidator>();
 builder.Services.AddScoped<IValidator<ReservationRequirementDto>, ReservationRequirementDtoValidator>();
+builder.Services.AddScoped<IValidator<TimeRangeAvailabilityDto>, TimeRangeAvailabilityDtoValidator>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddHttpContextAccessor();

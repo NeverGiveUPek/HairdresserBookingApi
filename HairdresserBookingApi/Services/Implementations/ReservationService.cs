@@ -165,6 +165,8 @@ public class ReservationService : IReservationService
 
         if (reservation == null) throw new NotFoundException($"Reservation of id: {reservationId} is not found");
 
+        if (reservation.Date < DateTime.Now) throw new AppException($"Can't change reservation with past date");
+
         var authorizeResult = _authorizationService.AuthorizeAsync(_userContextService.GetUser()!, reservation,
             new OperationRequirement(Operation.Update)).Result;
 

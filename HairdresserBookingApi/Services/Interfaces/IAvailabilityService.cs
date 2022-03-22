@@ -16,5 +16,5 @@ public interface IAvailabilityService
 
     AvailabilityDto? AvailabilityInDay(DateTime date, int workerId);
 
-    void AddAvailabilityInPeriod(TimeRange timeRange, int workerId);
+    void AddAvailabilityInPeriod(TimeRangeAvailabilityDto timeRange, int workerId);
 }

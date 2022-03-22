@@ -62,7 +62,7 @@ public class AvailabilityController : ControllerBase
     }
 
     [HttpPost("timeRange")]
-    public ActionResult AddPeriodAvailability([FromBody] TimeRange timeRange, [FromRoute] int workerId)
+    public ActionResult AddPeriodAvailability([FromBody] TimeRangeAvailabilityDto timeRange, [FromRoute] int workerId)
     {
         _availabilityService.AddAvailabilityInPeriod(timeRange, workerId);
 
