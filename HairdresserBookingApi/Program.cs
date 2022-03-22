@@ -64,6 +64,14 @@ builder.Services.AddScoped<SeederFacade>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("client", build =>
+        build.AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins(builder.Configuration["AllowedOrigins"])
+    );
+});
 
 
 builder.Services.AddScoped<IAuthorizationHandler, OperationRequirementHandler>();
@@ -95,7 +103,10 @@ builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
 builder.Host.UseNLog();
 
 
+
 var app = builder.Build();
+
+app.UseCors("client");
 
 var scope = app.Services.CreateScope();
 
