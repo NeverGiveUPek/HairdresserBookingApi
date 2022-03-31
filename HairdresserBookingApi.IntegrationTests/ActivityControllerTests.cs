@@ -19,28 +19,15 @@ using Xunit;
 
 namespace HairdresserBookingApi.IntegrationTests;
 
-public class ActivityControllerTests : IClassFixture<WebApplicationFactory<Program>>
+public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> _factory;
+    private readonly CustomWebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
 
 
-    public ActivityControllerTests(WebApplicationFactory<Program> factory)
+    public ActivityControllerTests(CustomWebApplicationFactory<Program> factory)
     {
-        _factory = factory
-            .WithWebHostBuilder(builder => builder.ConfigureServices(services =>
-            {
-                var dbContextOptions = services.SingleOrDefault(service =>
-                    service.ServiceType == typeof(DbContextOptions<BookingDbContext>));
-                if (dbContextOptions != null) services.Remove(dbContextOptions);
-                
-                services.AddSingleton<IPolicyEvaluator, TestsPolicyEvaluator>();
-                services.AddMvc(x => x.Filters.Add(new TestUserFilter()));
-
-
-                services.AddDbContext<BookingDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
-
-            }));
+        _factory = factory;
         _client = _factory.CreateClient();
 
     }
