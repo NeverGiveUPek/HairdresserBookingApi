@@ -12,7 +12,7 @@ public class FastestReservationSelectorStrategy : IReservationSelectorStrategy
     
     public DateTime? FindBestTime(List<TimeRange> accessibility)
     {
-        var first = accessibility.FirstOrDefault();
+        var first = accessibility.OrderBy(x => x.StartDate).FirstOrDefault();
 
         return first?.StartDate;
     }

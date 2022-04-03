@@ -36,7 +36,13 @@ public class ReservationService : IReservationService
     }
 
 
-
+    /// <summary>
+    /// Function gets all time in day where reservation can fit (it ends before or equal time where worker is accessible)
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
+    /// <exception cref="AppException"></exception>
     public List<TimeRange> GetAllPossibleTimesInDay(ReservationRequestDto request)
     {
 
@@ -190,13 +196,11 @@ public class ReservationService : IReservationService
 
     }
 
-    public ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement)
+    private IReservationSelectorStrategy SelectStrategy(PickStrategy pickStrategy)
     {
-
-        
         IReservationSelectorStrategy strategy;
 
-        switch (requirement.PickStrategy)
+        switch (pickStrategy)
         {
             case PickStrategy.Fast:
                 strategy = new FastestReservationSelectorStrategy();
@@ -210,10 +214,19 @@ public class ReservationService : IReservationService
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        return strategy;
+    }
+
+    public ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement)
+    {
+
         
+        IReservationSelectorStrategy strategy = SelectStrategy(requirement.PickStrategy);
 
 
         var accessibility = new List<TimeRange>();
+
 
         while (requirement.TimeRange.StartDate.Date <= requirement.TimeRange.EndDate.Date)
         {

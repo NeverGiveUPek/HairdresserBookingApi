@@ -7,7 +7,6 @@ using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Entities.Api;
 using Microsoft.Extensions.DependencyInjection;
-using NLog.Targets.Wrappers;
 using Xunit;
 
 namespace HairdresserBookingApi.IntegrationTests;
