@@ -46,6 +46,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize]
     public ActionResult RemoveAccount()
     {
         _accountService.RemoveAccount();
