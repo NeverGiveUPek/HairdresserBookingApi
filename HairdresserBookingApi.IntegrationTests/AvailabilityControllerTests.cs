@@ -25,55 +25,12 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
         _client = _factory.CreateClient();
     }
 
-    private void ClearWorkers()
-    {
-        var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-
-        using var scope = scopeFactory?.CreateScope();
-        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
-
-        dbContext?.Workers.RemoveRange(dbContext?.Workers);
-        dbContext?.SaveChanges();
-    }
-
-    private void ClearAvailabilities()
-    {
-        var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-
-        using var scope = scopeFactory?.CreateScope();
-        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
-
-        dbContext?.Availabilities.RemoveRange(dbContext?.Availabilities);
-        dbContext?.SaveChanges();
-    }
-
-    private void SeedWorker(Worker worker)
-    {
-        var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-
-        using var scope = scopeFactory?.CreateScope();
-        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
-
-        dbContext?.Workers.Add(worker);
-        dbContext?.SaveChanges();
-    }
-
-    private void SeedAvailability(Availability availability)
-    {
-        var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-
-        using var scope = scopeFactory?.CreateScope();
-        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
-
-        dbContext?.Availabilities.Add(availability);
-        dbContext?.SaveChanges();
-    }
-
-
+   
+    
     [Fact]
     public async Task GetCurrentAvailabilities_ForExistingWorker_ReturnsOk()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -83,7 +40,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
         var response = await _client.GetAsync($"api/worker/{worker.Id}/availability/current");
 
@@ -101,7 +58,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task GetAllAvailabilities_ForExistingWorker_ReturnsOk()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -111,7 +68,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
         var response = await _client.GetAsync($"api/worker/{worker.Id}/availability/all");
 
@@ -130,7 +87,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailability_ForExistingWorkerAndValidModel_ReturnsCreated()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -140,7 +97,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
         var addAvailability = new AddAvailabilityDto()
         {
@@ -158,7 +115,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailability_ForExistingWorkerAndValidModelAndOverlappingDate_ReturnsCreated()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -168,9 +125,9 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
-        ClearAvailabilities();
+        
 
         var availabilityToOverlap = new Availability()
         {
@@ -179,7 +136,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             WorkerId = worker.Id
         };
 
-        SeedAvailability(availabilityToOverlap);
+        EntitySeeder.SeedAvailability(availabilityToOverlap, _factory);
 
 
         var addAvailability = new AddAvailabilityDto()
@@ -233,7 +190,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task RemoveAvailability_ForExistingModelAndExistingWorker_ReturnsNoContent()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -243,9 +200,9 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
-        ClearAvailabilities();
+        
 
         var availability = new Availability()
         {
@@ -254,7 +211,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             WorkerId = worker.Id
         };
 
-        SeedAvailability(availability);
+        EntitySeeder.SeedAvailability(availability, _factory);
 
         var response = await _client.DeleteAsync($"api/worker/{worker.Id}/availability/{availability.Id}");
 
@@ -264,7 +221,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task RemoveAvailability_ForNonExistingModelAndExistingWorker_ReturnsNotFound()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -274,7 +231,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
 
         var response = await _client.DeleteAsync($"api/worker/{worker.Id}/availability/{-1}");
@@ -294,7 +251,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndValidModel_ReturnsOk()
     {
-        ClearWorkers();
+       
 
         var worker = new Worker()
         {
@@ -304,9 +261,9 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
-        ClearAvailabilities();
+        
 
         var availability = new Availability()
         {
@@ -315,7 +272,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             WorkerId = worker.Id
         };
 
-        SeedAvailability(availability);
+        EntitySeeder.SeedAvailability(availability, _factory);
 
         var updateAvailability = new UpdateAvailabilityDto()
         {
@@ -335,7 +292,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndInvalidDateInModel_ReturnsBadRequest()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -345,9 +302,9 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
-        ClearAvailabilities();
+        
 
         var availability = new Availability()
         {
@@ -356,7 +313,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             WorkerId = worker.Id
         };
 
-        SeedAvailability(availability);
+        EntitySeeder.SeedAvailability(availability, _factory);
 
         //day must be the same as updating entity
 
@@ -379,7 +336,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndInvalidModel_ReturnsBadRequest()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -389,9 +346,9 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
-        ClearAvailabilities();
+        
 
         var availability = new Availability()
         {
@@ -400,7 +357,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             WorkerId = worker.Id
         };
 
-        SeedAvailability(availability);
+        EntitySeeder.SeedAvailability(availability, _factory);
 
         
 
@@ -423,7 +380,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndNonExistingAvailability_ReturnsNotFound()
     {
-        ClearWorkers();
+       
 
         var worker = new Worker()
         {
@@ -433,8 +390,8 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
-        
+        EntitySeeder.SeedWorker(worker, _factory);
+
 
 
         var updateAvailability = new UpdateAvailabilityDto()
@@ -474,7 +431,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailabilityInPeriod_ForExistingWorkerAndValidModel_ReturnsCreated()
     {
-        ClearWorkers();
+        
 
         var worker = new Worker()
         {
@@ -484,7 +441,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
             PhoneNumber = "456456456"
         };
 
-        SeedWorker(worker);
+        EntitySeeder.SeedWorker(worker, _factory);
 
         var model = new TimeRangeAvailabilityDto()
         {

@@ -33,18 +33,6 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
     }
     
 
-    private void SeedActivity(Activity activity)
-    {
-        var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-        
-        using var scope = scopeFactory?.CreateScope();
-        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
-
-        dbContext?.Activities.Add(activity);
-        dbContext?.SaveChanges();
-    }
-
-
     [Fact]
     public async Task GetAll_ReturnsOk()
     {
@@ -71,7 +59,7 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
             IsForMan = true
         };
 
-        SeedActivity(model);
+        EntitySeeder.SeedActivity(model, _factory);
 
         var response = await _client.GetAsync($"api/activity/{model.Id}");
 
@@ -137,7 +125,7 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
             Description = "Second"
         };
 
-        SeedActivity(firstModel);
+        EntitySeeder.SeedActivity(firstModel, _factory);
 
         var httpContent = secondModel.ToJsonHttpContent();
         
@@ -156,7 +144,7 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
             Description = "First"
         };
 
-        SeedActivity(model);
+        EntitySeeder.SeedActivity(model, _factory);
 
         var response = await _client.DeleteAsync($"api/activity/{model.Id}");
 
@@ -180,8 +168,8 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
             IsForMan = true,
             Description = "First"
         };
-        
-        SeedActivity(modelToUpdate);
+
+        EntitySeeder.SeedActivity(modelToUpdate, _factory);
 
 
         var updateDto = new UpdateActivityDto()
@@ -226,7 +214,7 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
             Description = "First"
         };
 
-        SeedActivity(modelToUpdate);
+        EntitySeeder.SeedActivity(modelToUpdate, _factory);
 
 
         //lack of required description

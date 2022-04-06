@@ -1,11 +1,16 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HairdresserBookingApi.IntegrationTests.Helpers;
+using HairdresserBookingApi.IntegrationTests.Helpers.Authorization;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Entities.Api;
+using Microsoft.AspNetCore.Authorization.Policy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -20,17 +25,6 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
     {
         _factory = factory;
         _client = _factory.CreateClient();
-    }
-
-    private void SeedWorker(Worker worker)
-    {
-        var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-
-        using var scope = scopeFactory?.CreateScope();
-        var dbContext = scope?.ServiceProvider.GetService<BookingDbContext>();
-
-        dbContext?.Workers.Add(worker);
-        dbContext?.SaveChanges();
     }
 
     [Fact]
@@ -52,7 +46,7 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
             PhoneNumber = "111222333"
         };
 
-        SeedWorker(model);
+        EntitySeeder.SeedWorker(model, _factory);
 
         var response = await _client.GetAsync($"api/worker/{model.Id}");
 
@@ -108,13 +102,13 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
     {
         var workerToUpdate = new Worker()
         {
-            FirstName = "Test3",
-            LastName = "Test3",
-            Email = "test3@test.com",
-            PhoneNumber = "123456712"
+            FirstName = "Test3toUpdate",
+            LastName = "Test3toUpdate",
+            Email = "test3toUpdate@test.com",
+            PhoneNumber = "12112315"
         };
 
-        SeedWorker(workerToUpdate);
+        EntitySeeder.SeedWorker(workerToUpdate, _factory);
 
         var updateDto = new UpdateWorkerDto()
         {
@@ -174,6 +168,7 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
     [Fact]
     public async Task Delete_ForExistingWorker_ReturnsNoContent()
     {
+        Thread.Sleep(100); //cause of problem with synchronization 
         var workerToDelete = new Worker()
         {
             FirstName = "TestToDelete",
@@ -182,7 +177,7 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
             PhoneNumber = "888777444"
         };
 
-        SeedWorker(workerToDelete);
+        EntitySeeder.SeedWorker(workerToDelete, _factory);
 
         var response = await _client.DeleteAsync($"api/worker/{workerToDelete.Id}");
 
