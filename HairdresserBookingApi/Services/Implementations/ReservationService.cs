@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HairdresserBookingApi.Authorization;
 using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Helper;
 using HairdresserBookingApi.Models.Dto.Reservation;
@@ -9,6 +8,7 @@ using HairdresserBookingApi.Services.Interfaces;
 using HairdresserBookingApi.Services.Strategies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web.LayoutRenderers;
 
 namespace HairdresserBookingApi.Services.Implementations;
 
@@ -147,13 +147,11 @@ public class ReservationService : IReservationService
 
         if( role == null) throw new ForbidException($"Don't have rights to change this resource");
 
-        var authorizeResult = _authorizationService.AuthorizeAsync(_userContextService.GetUser()!, reservation,
-                new OperationRequirement(Operation.Delete)).Result;
+        var id = _userContextService.GetUserId();
 
-
-        if (role != "Admin" && role != "Manager" && !authorizeResult.Succeeded)
+        if (role == null || ( role != "Admin" && role != "Manager" && id != reservation.UserId))
         {
-            throw new ForbidException($"Don't have rights to change this resource");
+            throw new ForbidException($"You don't have rights to change this resource");
         }
         
 
@@ -165,20 +163,19 @@ public class ReservationService : IReservationService
 
     public void EditReservation(int reservationId, EditReservationDateDto editReservationDto)
     {
+
         var reservation = _dbContext
             .Reservations
             .FirstOrDefault(r => r.Id == reservationId);
 
         if (reservation == null) throw new NotFoundException($"Reservation of id: {reservationId} is not found");
 
-        if (reservation.Date < DateTime.Now) throw new AppException($"Can't change reservation with past date");
 
-        var authorizeResult = _authorizationService.AuthorizeAsync(_userContextService.GetUser()!, reservation,
-            new OperationRequirement(Operation.Update)).Result;
+        var id = _userContextService.GetUserId();
 
-        if (!authorizeResult.Succeeded)
+        if (id == null || id != reservation.UserId)
         {
-            throw new ForbidException($"Don't have rights to change this resource");
+            throw new ForbidException($"You don't have rights to change this resource");
         }
 
         //check if new date is possible

@@ -15,4 +15,13 @@ public class TimeRange
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+
+    public override string ToString()
+    {
+        var startDate = StartDate.ToString("s") + ".000Z";
+        var endDate = EndDate.ToString("s") + ".000Z";
+
+
+        return $"TimeRange.StartDate={startDate}&TimeRange.EndDate={endDate}";
+    }
 }

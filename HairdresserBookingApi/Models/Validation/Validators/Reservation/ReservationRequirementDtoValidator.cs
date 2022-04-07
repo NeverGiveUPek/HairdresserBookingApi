@@ -28,9 +28,11 @@ public class ReservationRequirementDtoValidator : AbstractValidator<ReservationR
 
             });
 
+        RuleFor(x => x.WorkerActivityId)
+            .NotEmpty();
 
 
-        
+
 
     }
 

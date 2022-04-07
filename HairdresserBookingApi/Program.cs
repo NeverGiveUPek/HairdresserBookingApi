@@ -2,7 +2,6 @@ using System.Reflection;
 using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using HairdresserBookingApi.Authorization;
 using HairdresserBookingApi.Middleware;
 using HairdresserBookingApi.Models.Authentication;
 using HairdresserBookingApi.Models.Db;
@@ -74,7 +73,6 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddScoped<IAuthorizationHandler, OperationRequirementHandler>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<IWorkerService, WorkerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();

@@ -8,4 +8,9 @@ public class ReservationRequirementDto
     public TimeRange TimeRange { get; set; }
 
     public PickStrategy PickStrategy { get; set; } = Reservation.PickStrategy.Fast;
+
+    public override string ToString()
+    {
+        return $"WorkerActivityId={WorkerActivityId}&{TimeRange.ToString()}&PickStrategy={(int)PickStrategy}";
+    }
 }
