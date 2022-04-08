@@ -12,11 +12,9 @@ public class EditReservationDateDtoValidator : AbstractValidator<EditReservation
             .NotEmpty()
             .Custom((value, context) =>
             {
-                if (!DateTimeHelper.IsDatePresent(value)) context.AddFailure("Date should be in future");
+                if (!DateTimeHelper.IsDateTimeInFuture(value)) context.AddFailure("Date should be in future");
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
             });
-
-
     }
 
 }

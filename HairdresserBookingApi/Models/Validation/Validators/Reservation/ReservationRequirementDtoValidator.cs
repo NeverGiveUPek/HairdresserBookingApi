@@ -9,9 +9,9 @@ public class ReservationRequirementDtoValidator : AbstractValidator<ReservationR
 {
     public ReservationRequirementDtoValidator()
     {
-        
-        
-        RuleFor(x => x.TimeRange.StartDate).NotEmpty()
+
+        RuleFor(x => x.TimeRange.StartDate)
+            .NotEmpty()
             .Custom((value, context) =>
             {
                 if (!DateTimeHelper.IsDateTimeInFuture(value)) context.AddFailure("Date should be in future");

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HairdresserBookingApi.IntegrationTests.Helpers;
@@ -10,7 +9,7 @@ using HairdresserBookingApi.Models.Dto.Reservation;
 using HairdresserBookingApi.Models.Entities.Api;
 using Xunit;
 
-namespace HairdresserBookingApi.IntegrationTests;
+namespace HairdresserBookingApi.IntegrationTests.Controllers;
 
 public class ReservationControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {

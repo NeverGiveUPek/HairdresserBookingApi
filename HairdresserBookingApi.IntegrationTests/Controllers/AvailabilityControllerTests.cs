@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HairdresserBookingApi.IntegrationTests.Helpers;
-using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Availability;
 using HairdresserBookingApi.Models.Entities.Api;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace HairdresserBookingApi.IntegrationTests;
+namespace HairdresserBookingApi.IntegrationTests.Controllers;
 
 public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {

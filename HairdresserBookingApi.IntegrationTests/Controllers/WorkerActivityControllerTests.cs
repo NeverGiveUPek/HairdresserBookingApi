@@ -8,7 +8,7 @@ using HairdresserBookingApi.Models.Dto.WorkerActivity;
 using HairdresserBookingApi.Models.Entities.Api;
 using Xunit;
 
-namespace HairdresserBookingApi.IntegrationTests;
+namespace HairdresserBookingApi.IntegrationTests.Controllers;
 
 public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {

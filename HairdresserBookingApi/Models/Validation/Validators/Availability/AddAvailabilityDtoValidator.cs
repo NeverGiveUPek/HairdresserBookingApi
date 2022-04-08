@@ -25,8 +25,8 @@ public class AddAvailabilityDtoValidator : AbstractValidator<AddAvailabilityDto>
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
             });
 
-        RuleFor(u => u.End.Day)
-            .Equal(u => u.Start.Day)
+        RuleFor(u => u.End.Date)
+            .Equal(u => u.Start.Date)
             .WithMessage("Availability Start and End must be in same day");
 
 

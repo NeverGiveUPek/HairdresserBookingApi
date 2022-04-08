@@ -1,20 +1,14 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HairdresserBookingApi.IntegrationTests.Helpers;
-using HairdresserBookingApi.IntegrationTests.Helpers.Authorization;
-using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Worker;
 using HairdresserBookingApi.Models.Entities.Api;
-using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace HairdresserBookingApi.IntegrationTests;
+namespace HairdresserBookingApi.IntegrationTests.Controllers;
 
 public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {

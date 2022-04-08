@@ -29,8 +29,6 @@ public class TimeRangeAvailabilityDtoValidator : AbstractValidator<TimeRangeAvai
                     context.AddFailure("Minimum time span is 5 minutes");
             });
 
-        RuleFor(t => t.EndDate.TimeOfDay)
-            .GreaterThan(a => a.StartDate.TimeOfDay);
 
     }
 }

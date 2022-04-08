@@ -1,23 +1,13 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HairdresserBookingApi.IntegrationTests.Helpers;
-using HairdresserBookingApi.IntegrationTests.Helpers.Authorization;
-using HairdresserBookingApi.Models.Db;
 using HairdresserBookingApi.Models.Dto.Activity;
 using HairdresserBookingApi.Models.Entities.Api;
-using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using Xunit;
 
-
-namespace HairdresserBookingApi.IntegrationTests;
+namespace HairdresserBookingApi.IntegrationTests.Controllers;
 
 public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {
