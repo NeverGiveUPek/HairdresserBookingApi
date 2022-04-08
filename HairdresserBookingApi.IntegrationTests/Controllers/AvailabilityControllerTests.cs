@@ -22,13 +22,10 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
         _client = _factory.CreateClient();
     }
 
-   
-    
+
     [Fact]
     public async Task GetCurrentAvailabilities_ForExistingWorker_ReturnsOk()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -55,8 +52,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task GetAllAvailabilities_ForExistingWorker_ReturnsOk()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -84,8 +79,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailability_ForExistingWorkerAndValidModel_ReturnsCreated()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -112,8 +105,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailability_ForExistingWorkerAndValidModelAndOverlappingDate_ReturnsCreated()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -124,7 +115,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
         EntitySeeder.SeedWorker(worker, _factory);
 
-        
 
         var availabilityToOverlap = new Availability()
         {
@@ -151,8 +141,7 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
     [Fact]
     public async Task AddAvailability_ForNonExistingWorkerAndValidModel_ReturnsNotFound()
-    { 
-
+    {
         var addAvailability = new AddAvailabilityDto()
         {
             Start = new DateTime(2030, 1, 1, 10, 0, 0),
@@ -169,7 +158,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailability_InvalidModel_ReturnsBadRequest()
     {
-
         var addAvailability = new AddAvailabilityDto()
         {
             Start = new DateTime(2015, 1, 1, 10, 0, 1),
@@ -187,8 +175,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task RemoveAvailability_ForExistingModelAndExistingWorker_ReturnsNoContent()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -199,7 +185,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
         EntitySeeder.SeedWorker(worker, _factory);
 
-        
 
         var availability = new Availability()
         {
@@ -218,8 +203,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task RemoveAvailability_ForNonExistingModelAndExistingWorker_ReturnsNotFound()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -248,8 +231,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndValidModel_ReturnsOk()
     {
-       
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -260,7 +241,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
         EntitySeeder.SeedWorker(worker, _factory);
 
-        
 
         var availability = new Availability()
         {
@@ -287,10 +267,9 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     }
 
     [Fact]
-    public async Task UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndInvalidDateInModel_ReturnsBadRequest()
+    public async Task
+        UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndInvalidDateInModel_ReturnsBadRequest()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -301,7 +280,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
         EntitySeeder.SeedWorker(worker, _factory);
 
-        
 
         var availability = new Availability()
         {
@@ -333,8 +311,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndExistingAvailabilityAndInvalidModel_ReturnsBadRequest()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -345,7 +321,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
         EntitySeeder.SeedWorker(worker, _factory);
 
-        
 
         var availability = new Availability()
         {
@@ -356,7 +331,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
 
         EntitySeeder.SeedAvailability(availability, _factory);
 
-        
 
         var updateAvailability = new UpdateAvailabilityDto()
         {
@@ -377,8 +351,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_ForExistingWorkerAndNonExistingAvailability_ReturnsNotFound()
     {
-       
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -388,7 +360,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
         };
 
         EntitySeeder.SeedWorker(worker, _factory);
-
 
 
         var updateAvailability = new UpdateAvailabilityDto()
@@ -409,7 +380,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task UpdateAvailability_NonExistingWorker_ReturnsNotFound()
     {
-        
         var updateAvailability = new UpdateAvailabilityDto()
         {
             Start = new DateTime(2030, 1, 2, 12, 0, 0),
@@ -428,8 +398,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
     [Fact]
     public async Task AddAvailabilityInPeriod_ForExistingWorkerAndValidModel_ReturnsCreated()
     {
-        
-
         var worker = new Worker()
         {
             FirstName = "AvailabilityTest",
@@ -451,7 +419,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
         var response = await _client.PostAsync($"api/worker/{worker.Id}/availability/timeRange", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-
     }
 
     [Fact]
@@ -468,7 +435,6 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
         var response = await _client.PostAsync($"api/worker/{-1}/availability/timeRange", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-
     }
 
     [Fact]
@@ -485,7 +451,5 @@ public class AvailabilityControllerTests : IClassFixture<CustomWebApplicationFac
         var response = await _client.PostAsync($"api/worker/{-1}/availability/timeRange", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-
     }
-
 }

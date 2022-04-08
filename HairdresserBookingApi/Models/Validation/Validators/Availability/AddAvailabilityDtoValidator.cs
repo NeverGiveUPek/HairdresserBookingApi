@@ -13,7 +13,8 @@ public class AddAvailabilityDtoValidator : AbstractValidator<AddAvailabilityDto>
             .Custom((value, context) =>
             {
                 if (!DateTimeHelper.IsDatePresent(value)) context.AddFailure("Date should be in future");
-                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
+                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5))
+                    context.AddFailure("Minimum time span is 5 minutes");
             });
 
         RuleFor(a => a.End)
@@ -22,14 +23,12 @@ public class AddAvailabilityDtoValidator : AbstractValidator<AddAvailabilityDto>
             .Custom((value, context) =>
             {
                 if (!DateTimeHelper.IsDatePresent(value)) context.AddFailure("Date should be in future");
-                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
+                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5))
+                    context.AddFailure("Minimum time span is 5 minutes");
             });
 
         RuleFor(u => u.End.Date)
             .Equal(u => u.Start.Date)
             .WithMessage("Availability Start and End must be in same day");
-
-
     }
-
 }

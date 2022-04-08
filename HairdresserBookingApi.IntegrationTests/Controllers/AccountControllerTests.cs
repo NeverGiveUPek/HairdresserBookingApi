@@ -22,10 +22,7 @@ public class AccountControllerTests : IClassFixture<CustomWebApplicationFactory<
         _factory = factory;
         _client = factory.WithWebHostBuilder(builder =>
         {
-            builder.ConfigureServices(services =>
-            {
-                services.AddSingleton(_accountServiceMock.Object);
-            });
+            builder.ConfigureServices(services => { services.AddSingleton(_accountServiceMock.Object); });
         }).CreateClient();
     }
 
@@ -114,5 +111,4 @@ public class AccountControllerTests : IClassFixture<CustomWebApplicationFactory<
 
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
-
 }

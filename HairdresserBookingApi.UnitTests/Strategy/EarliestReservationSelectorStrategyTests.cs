@@ -9,7 +9,6 @@ namespace HairdresserBookingApi.UnitTests.Strategy;
 
 public class EarliestReservationSelectorStrategyTests
 {
-
     public static IEnumerable<object[]> GetSampleAccessibility()
     {
         yield return new object[]
@@ -64,7 +63,6 @@ public class EarliestReservationSelectorStrategyTests
         var result = strategy.FindBestTime(accessibility);
 
         result.Should().Be(bestTime);
-
     }
 
     [Fact]
@@ -77,9 +75,5 @@ public class EarliestReservationSelectorStrategyTests
         var result = strategy.FindBestTime(accessibility);
 
         result.Should().BeNull();
-
     }
-
-
-
 }

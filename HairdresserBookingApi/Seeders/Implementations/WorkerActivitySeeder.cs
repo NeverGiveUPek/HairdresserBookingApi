@@ -12,8 +12,6 @@ public class WorkerActivitySeeder : ISeeder
             dbContext.WorkerActivities.AddRange(GetWorkerActivities(dbContext));
             dbContext.SaveChanges();
         }
-
-
     }
 
 
@@ -54,7 +52,6 @@ public class WorkerActivitySeeder : ISeeder
         workerActivities.Add(thirdWorkerActivity);
 
 
-
         var fourthWorkerActivity = new WorkerActivity()
         {
             Price = 100,
@@ -72,7 +69,6 @@ public class WorkerActivitySeeder : ISeeder
             WorkerId = workers.Skip(2).First().Id
         };
         workerActivities.Add(fourthWorkerActivity);
-
 
 
         return workerActivities;

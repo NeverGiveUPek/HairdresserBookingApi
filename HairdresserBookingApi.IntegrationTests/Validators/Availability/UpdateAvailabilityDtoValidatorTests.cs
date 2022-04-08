@@ -41,7 +41,6 @@ public class UpdateAvailabilityDtoValidatorTests
     {
         var list = new List<UpdateAvailabilityDto>()
         {
-            
             new UpdateAvailabilityDto()
             {
                 Start = DateTime.Now.Date.AddHours(10),
@@ -72,10 +71,9 @@ public class UpdateAvailabilityDtoValidatorTests
             },
             new UpdateAvailabilityDto()
             {
-
             }
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 }

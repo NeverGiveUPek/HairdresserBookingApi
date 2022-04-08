@@ -7,9 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserBookingApi.Controllers;
 
-
-
-
 [ApiController]
 [Route("api/reservation")]
 [Authorize]
@@ -22,7 +19,7 @@ public class ReservationController : ControllerBase
         _reservationService = reservationService;
     }
 
-    
+
     [HttpGet("day")]
     public ActionResult<List<TimeRange>> GetAllPossibleTimesInDay([FromQuery] ReservationRequestDto reservationRequest)
     {
@@ -75,14 +72,9 @@ public class ReservationController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult EditReservation([FromRoute] int id, [FromBody] EditReservationDateDto editReservationDateDto)
     {
-        _reservationService.EditReservation(id,editReservationDateDto);
+        _reservationService.EditReservation(id, editReservationDateDto);
 
 
         return Ok();
     }
-
-
-
-
-
 }

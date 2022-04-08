@@ -33,7 +33,7 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
             PhoneNumber = "111222123"
         };
 
-        EntitySeeder.SeedWorker(worker,_factory);
+        EntitySeeder.SeedWorker(worker, _factory);
 
         var response = await _client.GetAsync($"api/workerActivity/worker/{worker.Id}");
 
@@ -65,7 +65,6 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
     [Fact]
     public async Task GetAllWorkersOfActivity_ForNonExistingActivity_ReturnsNotFound()
     {
-        
         var response = await _client.GetAsync($"api/workerActivity/activity/{-1}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -80,7 +79,7 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
         EntitySeeder.SeedWorker(worker, _factory);
 
         var activity = TestActivity;
-        
+
         EntitySeeder.SeedActivity(activity, _factory);
 
         var workerActivity = new WorkerActivity()
@@ -90,13 +89,12 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
             WorkerId = worker.Id,
             ActivityId = activity.Id
         };
-        
+
         EntitySeeder.SeedWorkerActivity(workerActivity, _factory);
 
         var response = await _client.GetAsync($"api/workerActivity/{workerActivity.Id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-
     }
 
 
@@ -106,7 +104,6 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
         var response = await _client.GetAsync($"api/workerActivity/{-1}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-
     }
 
 
@@ -134,23 +131,20 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
         var response = await _client.PostAsync($"api/workerActivity", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-
     }
 
 
     [Fact]
     public async Task CreateWorkerActivity_ForInvalidModel_ReturnsBadRequest()
     {
-
         var model = new CreateWorkerActivityDto();
-       
+
 
         var httpContent = model.ToJsonHttpContent();
 
         var response = await _client.PostAsync($"api/workerActivity", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-
     }
 
     [Fact]
@@ -334,7 +328,6 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
     [Fact]
     public async Task Deactivate_ForNonExistingWorkerActivity_ReturnsNoContent()
     {
-        
         var response = await _client.PutAsync($"api/workerActivity/{-1}/deactivate", null);
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -369,13 +362,10 @@ public class WorkerActivityControllerTests : IClassFixture<CustomWebApplicationF
     [Fact]
     public async Task Activate_ForNonExistingWorkerActivity_ReturnsNoContent()
     {
-
         var response = await _client.PutAsync($"api/workerActivity/{-1}/deactivate", null);
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
-
-
 
 
     private static Worker TestWorker => new()

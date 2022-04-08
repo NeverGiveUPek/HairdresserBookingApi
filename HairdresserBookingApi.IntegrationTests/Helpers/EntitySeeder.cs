@@ -60,5 +60,4 @@ public static class EntitySeeder
         dbContext?.Reservations.Add(reservation);
         dbContext?.SaveChanges();
     }
-
 }

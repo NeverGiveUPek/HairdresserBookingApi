@@ -17,7 +17,6 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-
         CreateMap<Activity, ActivityDto>();
         CreateMap<CreateActivityDto, Activity>();
 
@@ -51,8 +50,5 @@ public class MappingProfile : Profile
             .ForMember(r => r.RequiredMinutes, c => c.MapFrom(s => s.WorkerActivity.RequiredMinutes));
 
         CreateMap<CreateWorkerActivityDto, WorkerActivity>();
-
-       
-
     }
 }

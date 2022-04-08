@@ -5,12 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
 
-
 [ApiController]
 [Route("api/account")]
 public class AccountController : ControllerBase
 {
-
     private readonly IAccountService _accountService;
 
     public AccountController(IAccountService accountService)
@@ -53,5 +51,4 @@ public class AccountController : ControllerBase
 
         return NoContent();
     }
-
 }

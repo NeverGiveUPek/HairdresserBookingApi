@@ -11,7 +11,6 @@ namespace HairdresserBookingApi.Services.Implementations;
 
 public class WorkerActivityService : IWorkerActivityService
 {
-
     private readonly BookingDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly ILogger<WorkerActivityService> _logger;
@@ -88,7 +87,8 @@ public class WorkerActivityService : IWorkerActivityService
 
         //check if same entity exist
         var foundEntity = _dbContext.WorkerActivities.FirstOrDefault
-        (wa => wa.Price == dto.Price && wa.RequiredMinutes == dto.RequiredMinutes && wa.ActivityId == dto.ActivityId && wa.WorkerId == dto.WorkerId);
+        (wa => wa.Price == dto.Price && wa.RequiredMinutes == dto.RequiredMinutes &&
+               wa.ActivityId == dto.ActivityId && wa.WorkerId == dto.WorkerId);
 
         if (foundEntity != null) throw new EntityExistsException($"Entity of this values already exists");
 

@@ -7,7 +7,6 @@ public class ReservationSeeder : ISeeder
 {
     public void Seed(BookingDbContext dbContext)
     {
-
         if (!dbContext.Reservations.Any())
         {
             var reservations = GetReservation(dbContext);
@@ -16,7 +15,6 @@ public class ReservationSeeder : ISeeder
 
             dbContext.SaveChanges();
         }
-
     }
 
 

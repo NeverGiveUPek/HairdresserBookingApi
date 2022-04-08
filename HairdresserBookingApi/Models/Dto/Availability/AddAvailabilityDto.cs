@@ -2,7 +2,6 @@
 
 namespace HairdresserBookingApi.Models.Dto.Availability;
 
-
 //Validate in AddAvailabilityDtoValidator
 public class AddAvailabilityDto
 {

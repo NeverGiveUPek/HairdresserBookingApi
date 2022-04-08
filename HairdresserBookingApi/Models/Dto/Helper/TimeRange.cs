@@ -10,7 +10,6 @@ public class TimeRange
 
     public TimeRange()
     {
-        
     }
 
     public DateTime StartDate { get; set; }

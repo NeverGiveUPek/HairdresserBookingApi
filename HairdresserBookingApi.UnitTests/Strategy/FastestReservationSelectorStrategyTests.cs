@@ -10,7 +10,6 @@ namespace HairdresserBookingApi.UnitTests.Strategy;
 
 public class FastestReservationSelectorStrategyTests
 {
-    
     [ClassData(typeof(FastestReservationTestData))]
     [Theory]
     public void FindBestTime_ForCorrectTimeRanges_ReturnsBestTimeRange(List<TimeRange> accessibility, DateTime bestTime)
@@ -32,7 +31,5 @@ public class FastestReservationSelectorStrategyTests
         var result = strategy.FindBestTime(accessibility);
 
         result.Should().BeNull();
-
     }
-
 }

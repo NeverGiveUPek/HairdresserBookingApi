@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
 
-
 [ApiController]
 [Route("api/workerActivity")]
 [Authorize]
@@ -81,5 +80,4 @@ public class WorkerActivityController : ControllerBase
 
         return NoContent();
     }
-
 }

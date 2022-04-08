@@ -8,14 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
 
-
 [ApiController]
 [Route("api/activity")]
 public class ActivityController : ControllerBase
 {
-
     private readonly IActivityService _activityService;
-    
 
 
     public ActivityController(IActivityService activityService)
@@ -79,5 +76,4 @@ public class ActivityController : ControllerBase
 
         return Ok();
     }
-
 }

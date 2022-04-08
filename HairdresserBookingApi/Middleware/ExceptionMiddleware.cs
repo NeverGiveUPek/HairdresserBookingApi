@@ -32,7 +32,7 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (NotAccessibleException notAccessibleException)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             _logger.LogError($"NotAccessible  Exception error");
             await context.Response.WriteAsync(notAccessibleException.Message);
         }
@@ -50,14 +50,13 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (InvalidOperationException invalidOperationException)
         {
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             _logger.LogError($"Invalid operation Exception error");
             await context.Response.WriteAsync(invalidOperationException.Message);
         }
         catch (Exception)
         {
-
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             _logger.LogCritical($"Internal server Exception error");
             await context.Response.WriteAsync("Error");
         }

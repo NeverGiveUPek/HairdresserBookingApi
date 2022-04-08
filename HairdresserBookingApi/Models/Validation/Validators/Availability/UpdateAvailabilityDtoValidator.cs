@@ -12,7 +12,8 @@ public class UpdateAvailabilityDtoValidator : AbstractValidator<UpdateAvailabili
             .NotEmpty()
             .Custom((value, context) =>
             {
-                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
+                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5))
+                    context.AddFailure("Minimum time span is 5 minutes");
             });
 
         RuleFor(u => u.End)
@@ -20,12 +21,12 @@ public class UpdateAvailabilityDtoValidator : AbstractValidator<UpdateAvailabili
             .GreaterThan(a => a.Start)
             .Custom((value, context) =>
             {
-                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5)) context.AddFailure("Minimum time span is 5 minutes");
+                if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5))
+                    context.AddFailure("Minimum time span is 5 minutes");
             });
 
         RuleFor(u => u.End.Day)
             .Equal(u => u.Start.Day)
             .WithMessage("Availability Start and End must be in same day");
-
     }
 }

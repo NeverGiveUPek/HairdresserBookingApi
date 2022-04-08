@@ -31,7 +31,7 @@ public class CreateUserDtoValidatorTests
             Email = "test@test.com"
         };
 
-        
+
         var validator = new CreateUserDtoValidator(_dbContext);
 
         var result = validator.TestValidate(model);
@@ -50,7 +50,6 @@ public class CreateUserDtoValidatorTests
 
         result.ShouldHaveAnyValidationError();
     }
-
 
 
     public static IEnumerable<object[]> GetMissingPartData()
@@ -75,7 +74,7 @@ public class CreateUserDtoValidatorTests
             },
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 
     public static IEnumerable<object[]> GetInvalidData()
@@ -118,10 +117,9 @@ public class CreateUserDtoValidatorTests
                 Password = "Test1234",
                 ConfirmPassword = "Mest1234"
             },
-
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 
     private void Seed()

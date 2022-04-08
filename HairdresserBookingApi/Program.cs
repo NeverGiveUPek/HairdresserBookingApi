@@ -26,7 +26,6 @@ using NLog.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 // Add services to the container.
 
 //authentication
@@ -101,7 +100,6 @@ builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
 builder.Host.UseNLog();
 
 
-
 var app = builder.Build();
 
 app.UseCors("client");
@@ -133,4 +131,6 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}

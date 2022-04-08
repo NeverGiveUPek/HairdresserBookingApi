@@ -48,7 +48,6 @@ public class WorkerService : IWorkerService
 
     public int Create(CreateWorkerDto dto)
     {
-
         var worker = _mapper.Map<Worker>(dto);
 
         _dbContext.Workers.Add(worker);

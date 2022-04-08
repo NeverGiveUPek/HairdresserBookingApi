@@ -11,6 +11,6 @@ public class ReservationRequirementDto
 
     public override string ToString()
     {
-        return $"WorkerActivityId={WorkerActivityId}&{TimeRange.ToString()}&PickStrategy={(int)PickStrategy}";
+        return $"WorkerActivityId={WorkerActivityId}&{TimeRange.ToString()}&PickStrategy={(int) PickStrategy}";
     }
 }

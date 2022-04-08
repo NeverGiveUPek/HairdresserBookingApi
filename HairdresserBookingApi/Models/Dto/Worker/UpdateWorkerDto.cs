@@ -5,13 +5,9 @@ namespace HairdresserBookingApi.Models.Dto.Worker;
 
 public class UpdateWorkerDto
 {
-    [Required]
-    [MaxLength(50)]
-    public string FirstName { get; set; }
+    [Required] [MaxLength(50)] public string FirstName { get; set; }
 
-    [Required]
-    [MaxLength(50)]
-    public string LastName { get; set; }
+    [Required] [MaxLength(50)] public string LastName { get; set; }
 
 
     [Required]

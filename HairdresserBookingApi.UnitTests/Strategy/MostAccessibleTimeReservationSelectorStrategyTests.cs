@@ -31,6 +31,5 @@ public class MostAccessibleTimeReservationSelectorStrategyTests
         var result = strategy.FindBestTime(accessibility);
 
         result.Should().BeNull();
-
     }
 }

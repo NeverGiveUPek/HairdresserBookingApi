@@ -63,10 +63,9 @@ public class ReservationRequestDtoValidatorTests
             },
             new ReservationRequestDto()
             {
-                
             },
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 }

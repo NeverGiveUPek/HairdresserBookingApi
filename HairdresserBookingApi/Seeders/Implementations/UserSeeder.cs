@@ -29,7 +29,7 @@ public class UserSeeder : ISeeder
 
         var roles = dbContext.Roles.ToList();
 
-        
+
         var firstUser = new User()
         {
             FirstName = "Jan",
@@ -38,7 +38,7 @@ public class UserSeeder : ISeeder
             Email = "janKowalski@gmail.com",
             RoleId = roles.First().Id
         };
-        
+
         firstUser.PasswordHash = _passwordHasher.HashPassword(firstUser, "JanKowalski123");
 
         users.Add(firstUser);
@@ -71,7 +71,4 @@ public class UserSeeder : ISeeder
 
         return users;
     }
-
-
-
 }

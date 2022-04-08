@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HairdresserBookingApi.Controllers;
 
-
 [ApiController]
 [Authorize(Roles = "Admin, Manager")]
 [Route("api/worker/{workerId}/availability")]
@@ -54,7 +53,8 @@ public class AvailabilityController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult UpdateAvailability([FromRoute] int id, [FromRoute] int workerId, [FromBody]UpdateAvailabilityDto dto )
+    public ActionResult UpdateAvailability([FromRoute] int id, [FromRoute] int workerId,
+        [FromBody] UpdateAvailabilityDto dto)
     {
         _availabilityService.Update(id, workerId, dto);
 
@@ -68,6 +68,4 @@ public class AvailabilityController : ControllerBase
 
         return Created($"api/worker/{workerId}/availability/current", null);
     }
-
-
 }

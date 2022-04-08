@@ -8,10 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HairdresserBookingApi.Services.Implementations;
 
-
 public class ActivityService : IActivityService
 {
-
     private readonly BookingDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly ILogger<ActivityService> _logger;
@@ -48,7 +46,7 @@ public class ActivityService : IActivityService
             .GroupBy(ws => ws.ActivityId)
             .Select(wsGroup => wsGroup.First())
             .ToList();
-            
+
 
         var availableServicesDto = _mapper.Map<List<AvailableActivityDto>>(availableCheapestServices);
 
@@ -65,14 +63,13 @@ public class ActivityService : IActivityService
 
         if (activity == null) throw new NotFoundException($"Activity of id: {id} is not found");
 
-        
+
         activity.WorkerActivity = activity.WorkerActivity.Where(x => x.IsActive).ToList();
 
         var activityDetailsDto = _mapper.Map<ActivityDetailsDto>(activity);
 
         return activityDetailsDto;
     }
-
 
 
     public int Create(CreateActivityDto dto)
@@ -82,7 +79,8 @@ public class ActivityService : IActivityService
             .SingleOrDefault(a => a.Name == dto.Name && a.IsForMan == dto.IsForMan);
 
         if (foundActivity != null)
-            throw new EntityExistsException($"Entity with name:{dto.Name} and value of IsForMan:{dto.IsForMan} is already in database");
+            throw new EntityExistsException(
+                $"Entity with name:{dto.Name} and value of IsForMan:{dto.IsForMan} is already in database");
 
         var activity = _mapper.Map<Activity>(dto);
 

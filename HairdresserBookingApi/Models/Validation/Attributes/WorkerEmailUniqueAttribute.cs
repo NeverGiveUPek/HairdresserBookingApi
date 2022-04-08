@@ -10,19 +10,17 @@ public class WorkerEmailUniqueAttribute : ValidationAttribute
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-
         if (value == null) return ValidationResult.Success;
 
-        var context = (BookingDbContext)validationContext.GetService(typeof(BookingDbContext))!;
+        var context = (BookingDbContext) validationContext.GetService(typeof(BookingDbContext))!;
         var entity = context.Workers.SingleOrDefault(e => e.Email == value.ToString());
-
 
 
         if (entity != null)
         {
             return new ValidationResult(GetErrorMessage(value.ToString()));
         }
-        
+
 
         return ValidationResult.Success;
     }

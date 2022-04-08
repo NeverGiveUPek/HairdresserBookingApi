@@ -12,10 +12,9 @@ public interface IActivityService
     ActivityDetailsDto GetById(int id);
 
     //Returns id of created entity
-    int Create(CreateActivityDto dto); 
-     
+    int Create(CreateActivityDto dto);
+
     void Delete(int id);
 
     void Update(UpdateActivityDto dto, int id);
-
 }

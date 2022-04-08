@@ -9,5 +9,4 @@ namespace HairdresserBookingApi.Services.Strategies;
 public interface IReservationSelectorStrategy
 {
     DateTime? FindBestTime(List<TimeRange> accessibility);
-
 }

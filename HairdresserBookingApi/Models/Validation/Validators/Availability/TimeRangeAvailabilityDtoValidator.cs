@@ -9,7 +9,6 @@ public class TimeRangeAvailabilityDtoValidator : AbstractValidator<TimeRangeAvai
 {
     public TimeRangeAvailabilityDtoValidator()
     {
-
         RuleFor(t => t.StartDate)
             .NotEmpty()
             .Custom((value, context) =>
@@ -28,7 +27,5 @@ public class TimeRangeAvailabilityDtoValidator : AbstractValidator<TimeRangeAvai
                 if (!DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(value, 5))
                     context.AddFailure("Minimum time span is 5 minutes");
             });
-
-
     }
 }

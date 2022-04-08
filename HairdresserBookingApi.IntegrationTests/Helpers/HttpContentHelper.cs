@@ -6,7 +6,6 @@ namespace HairdresserBookingApi.IntegrationTests.Helpers;
 
 public static class HttpContentHelper
 {
-
     public static HttpContent ToJsonHttpContent(this object model)
     {
         var json = JsonConvert.SerializeObject(model);
@@ -15,5 +14,4 @@ public static class HttpContentHelper
 
         return httpContent;
     }
-
 }

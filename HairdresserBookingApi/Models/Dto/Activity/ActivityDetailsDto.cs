@@ -13,5 +13,5 @@ public class ActivityDetailsDto
 
     public bool IsForMan { get; set; }
 
-    public List<WorkerActivityDto> WorkerActivity { get; set; } 
+    public List<WorkerActivityDto> WorkerActivity { get; set; }
 }

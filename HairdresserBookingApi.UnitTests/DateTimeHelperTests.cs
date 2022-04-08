@@ -35,7 +35,6 @@ public class DateTimeHelperTests
         {
             DateTime.Now.Date.AddMinutes(-15)
         };
-
     }
 
     public static IEnumerable<object[]> FutureDates()
@@ -66,44 +65,42 @@ public class DateTimeHelperTests
     {
         yield return new object[]
         {
-            new DateTime(2030,1,1),
+            new DateTime(2030, 1, 1),
             5
         };
 
         yield return new object[]
         {
-            new DateTime(2030,1,1,0,10,0),
+            new DateTime(2030, 1, 1, 0, 10, 0),
             10
         };
 
         yield return new object[]
         {
-            new DateTime(2030,1,1,0,10,0),
+            new DateTime(2030, 1, 1, 0, 10, 0),
             5
         };
-
     }
 
     public static IEnumerable<object[]> WithoutMinimumTimeSpanDates()
     {
         yield return new object[]
         {
-            new DateTime(2030,1,1,0,1,0),
+            new DateTime(2030, 1, 1, 0, 1, 0),
             5
         };
 
         yield return new object[]
         {
-            new DateTime(2030,1,1,0,0,1),
+            new DateTime(2030, 1, 1, 0, 0, 1),
             10
         };
 
         yield return new object[]
         {
-            new DateTime(2030,1,1,0,0,0,5),
+            new DateTime(2030, 1, 1, 0, 0, 0, 5),
             5
         };
-
     }
 
 
@@ -128,7 +125,6 @@ public class DateTimeHelperTests
 
     [Theory]
     [MemberData(nameof(FutureDates))]
-
     public void IsDateTimeInFuture_ForGivenDate_ReturnsTrue(DateTime dateTime)
     {
         var result = DateTimeHelper.IsDateTimeInFuture(dateTime);
@@ -143,7 +139,6 @@ public class DateTimeHelperTests
         var result = DateTimeHelper.IsDateTimeInFuture(dateTime);
 
         result.Should().BeFalse();
-
     }
 
     [Theory]
@@ -153,7 +148,6 @@ public class DateTimeHelperTests
         var result = DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(dateTime, minutesSpan);
 
         result.Should().BeTrue();
-
     }
 
     [Theory]
@@ -163,8 +157,5 @@ public class DateTimeHelperTests
         var result = DateTimeHelper.HasMinimumTimeSpanAsCertainMinutes(dateTime, minutesSpan);
 
         result.Should().BeFalse();
-
     }
-
-
 }

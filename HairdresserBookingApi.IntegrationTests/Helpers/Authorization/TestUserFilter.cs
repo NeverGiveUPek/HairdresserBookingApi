@@ -10,7 +10,7 @@ public class TestUserFilter : IAsyncActionFilter
     {
         var claimsPrincipal = new ClaimsPrincipal();
         claimsPrincipal.AddIdentity(new ClaimsIdentity(
-            new []
+            new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, "1"),
                 new Claim(ClaimTypes.Role, "Admin")

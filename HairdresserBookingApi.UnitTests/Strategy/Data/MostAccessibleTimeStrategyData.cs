@@ -54,8 +54,6 @@ public class MostAccessibleTimeStrategyData : IEnumerable<object[]>
             },
             new DateTime(2030, 1, 1, 10, 0, 0)
         };
-
-
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

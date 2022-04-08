@@ -23,7 +23,9 @@ public class ReservationService : IReservationService
     private readonly IReservationSelectorStrategy _reservationSelector;
     private readonly ILogger<ReservationService> _logger;
 
-    public ReservationService(BookingDbContext dbContext, IMapper mapper, IUserContextService userContextService, IAvailabilityService availabilityService, IAuthorizationService authorizationService, ILogger<ReservationService> logger)
+    public ReservationService(BookingDbContext dbContext, IMapper mapper, IUserContextService userContextService,
+        IAvailabilityService availabilityService, IAuthorizationService authorizationService,
+        ILogger<ReservationService> logger)
     {
         _dbContext = dbContext;
         _mapper = mapper;
@@ -45,7 +47,6 @@ public class ReservationService : IReservationService
     /// <exception cref="AppException"></exception>
     public List<TimeRange> GetAllPossibleTimesInDay(ReservationRequestDto request)
     {
-
         var workerActivity = _dbContext
             .WorkerActivities
             .Include(wa => wa.Worker)
@@ -61,25 +62,22 @@ public class ReservationService : IReservationService
         var accessibilityList = AccessibilityInDay(request.Date.Date, workerActivity.WorkerId);
 
 
-
         var possibleTimes = new List<TimeRange>();
 
         foreach (var timeRange in accessibilityList)
         {
-            if(timeRange.StartDate <= timeRange.EndDate.AddMinutes(-1 * workerActivity.RequiredMinutes))
+            if (timeRange.StartDate <= timeRange.EndDate.AddMinutes(-1 * workerActivity.RequiredMinutes))
             {
-                possibleTimes.Add(new TimeRange(timeRange.StartDate, timeRange.EndDate.AddMinutes(-1 * workerActivity.RequiredMinutes)));
+                possibleTimes.Add(new TimeRange(timeRange.StartDate,
+                    timeRange.EndDate.AddMinutes(-1 * workerActivity.RequiredMinutes)));
             }
         }
 
         return possibleTimes;
-
     }
 
     public void MakeReservation(ReservationRequestDto request)
     {
-        
-
         var isAccessible = IsAccessible(request);
 
         if (!isAccessible) throw new NotAccessibleException($"Reservation can't be in this time");
@@ -91,7 +89,7 @@ public class ReservationService : IReservationService
 
         if (!workerActivity.IsActive) throw new AppException($"WorkerActivity is not active");
 
-        
+
         var userId = _userContextService.GetUserId();
         if (userId == null) throw new AppException($"Can't receive userId from Claims");
 
@@ -101,7 +99,6 @@ public class ReservationService : IReservationService
 
         var reservationEntity = _mapper.Map<Reservation>(request);
 
-        
 
         reservationEntity.UserId = (int) userId;
 
@@ -126,7 +123,8 @@ public class ReservationService : IReservationService
         var userId = _userContextService.GetUserId();
         if (userId == null) throw new AppException($"Can't receive userId from Claims");
 
-        var reservations = _dbContext.Reservations.Include(r => r.WorkerActivity).Where(r => r.UserId == userId && r.Date > DateTime.Now);
+        var reservations = _dbContext.Reservations.Include(r => r.WorkerActivity)
+            .Where(r => r.UserId == userId && r.Date > DateTime.Now);
 
         var reservationsInfo = _mapper.Map<List<ReservationInfoDto>>(reservations);
 
@@ -145,25 +143,22 @@ public class ReservationService : IReservationService
 
         var role = _userContextService.GetUserRole();
 
-        if( role == null) throw new ForbidException($"Don't have rights to change this resource");
+        if (role == null) throw new ForbidException($"Don't have rights to change this resource");
 
         var id = _userContextService.GetUserId();
 
-        if (role == null || ( role != "Admin" && role != "Manager" && id != reservation.UserId))
+        if (role == null || (role != "Admin" && role != "Manager" && id != reservation.UserId))
         {
             throw new ForbidException($"You don't have rights to change this resource");
         }
-        
+
 
         _dbContext.Reservations.Remove(reservation);
         _dbContext.SaveChanges();
-
-
     }
 
     public void EditReservation(int reservationId, EditReservationDateDto editReservationDto)
     {
-
         var reservation = _dbContext
             .Reservations
             .FirstOrDefault(r => r.Id == reservationId);
@@ -190,7 +185,6 @@ public class ReservationService : IReservationService
         reservation.Date = editReservationDto.Date;
 
         _dbContext.SaveChanges();
-
     }
 
     private IReservationSelectorStrategy SelectStrategy(PickStrategy pickStrategy)
@@ -217,8 +211,6 @@ public class ReservationService : IReservationService
 
     public ReservationRequestDto FindBestReservation(ReservationRequirementDto requirement)
     {
-
-        
         IReservationSelectorStrategy strategy = SelectStrategy(requirement.PickStrategy);
 
 
@@ -236,7 +228,6 @@ public class ReservationService : IReservationService
             requirement.TimeRange.StartDate = requirement.TimeRange.StartDate.AddDays(1);
         }
 
-        
 
         var bestTime = strategy.FindBestTime(accessibility);
 
@@ -267,7 +258,7 @@ public class ReservationService : IReservationService
         return false;
     }
 
-    
+
     private List<TimeRange> AccessibilityInDay(DateTime date, int workerId)
     {
         var workerAvailability = _availabilityService.AvailabilityInDay(date, workerId);
@@ -292,22 +283,19 @@ public class ReservationService : IReservationService
             var start = reservation.Date;
             var end = reservation.Date.AddMinutes(reservation.WorkerActivity.RequiredMinutes);
 
-            list.Add(new TimeRange(start,end));   
+            list.Add(new TimeRange(start, end));
         }
 
         //collapse reservationRequest times example: 11:00-11:30 and 11:30-12:00 => 11:00-12:00
 
-        for (int i = list.Count - 1; i > 0 ; i--)
+        for (int i = list.Count - 1; i > 0; i--)
         {
             if (list[i].StartDate == list[i - 1].EndDate)
             {
-                list[i-1].EndDate = list[i].EndDate;
+                list[i - 1].EndDate = list[i].EndDate;
                 list.RemoveAt(i);
             }
         }
-
-
-
 
 
         var accessibilityList = new List<TimeRange>();
@@ -329,15 +317,13 @@ public class ReservationService : IReservationService
         }
 
 
-
         return accessibilityList;
     }
+
     private int CountAmountOfUserFutureReservation(int userId)
     {
         var amount = _dbContext.Reservations.Count(r => r.UserId == userId && r.Date > DateTime.Now);
 
         return amount;
     }
-
-
 }

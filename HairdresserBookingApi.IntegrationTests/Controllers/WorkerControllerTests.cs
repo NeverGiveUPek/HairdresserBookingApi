@@ -117,7 +117,6 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
         var response = await _client.PutAsync($"api/worker/{workerToUpdate.Id}", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-
     }
 
     [Fact]
@@ -185,6 +184,4 @@ public class WorkerControllerTests : IClassFixture<CustomWebApplicationFactory<P
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
-
-
 }

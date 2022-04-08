@@ -11,7 +11,6 @@ public class ReservationRequestDto
     public int WorkerActivityId { get; set; }
 
 
-
     public override string ToString()
     {
         var date = Date.ToString("s") + ".000Z";

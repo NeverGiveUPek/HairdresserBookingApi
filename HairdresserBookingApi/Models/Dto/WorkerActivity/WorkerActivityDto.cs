@@ -11,7 +11,4 @@ public class WorkerActivityDto
     public string? WorkerName { get; set; }
     public int ActivityId { get; set; }
     public string? ActivityName { get; set; }
-
-
-    
 }

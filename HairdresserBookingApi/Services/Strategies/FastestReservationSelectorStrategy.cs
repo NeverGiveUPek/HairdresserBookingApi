@@ -9,7 +9,6 @@ namespace HairdresserBookingApi.Services.Strategies;
 
 public class FastestReservationSelectorStrategy : IReservationSelectorStrategy
 {
-    
     public DateTime? FindBestTime(List<TimeRange> accessibility)
     {
         var first = accessibility.OrderBy(x => x.StartDate).FirstOrDefault();

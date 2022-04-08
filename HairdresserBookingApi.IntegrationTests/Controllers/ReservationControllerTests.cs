@@ -324,7 +324,6 @@ public class ReservationControllerTests : IClassFixture<CustomWebApplicationFact
     [Fact]
     public async Task MakeReservation_ForValidModel_ReturnsCreated()
     {
-
         var workerActivity = MakeWorkerActivity();
 
         var availability = new Availability
@@ -437,7 +436,6 @@ public class ReservationControllerTests : IClassFixture<CustomWebApplicationFact
     [Fact]
     public async Task MakeReservation_ForToManyActiveReservations_ReturnsForbidden()
     {
-        
         var workerActivity = MakeWorkerActivity();
 
         var availability = new Availability

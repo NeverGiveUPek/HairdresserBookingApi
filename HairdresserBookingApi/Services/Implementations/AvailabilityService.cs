@@ -57,8 +57,9 @@ public class AvailabilityService : IAvailabilityService
 
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
-        var sameTimeAvailability = worker.Availabilities.FirstOrDefault(a => a.WorkerId == workerId && a.Start.Day == dto.Start.Day);
-        
+        var sameTimeAvailability =
+            worker.Availabilities.FirstOrDefault(a => a.WorkerId == workerId && a.Start.Day == dto.Start.Day);
+
         if (sameTimeAvailability != null)
         {
             sameTimeAvailability.Start = dto.Start;
@@ -105,12 +106,11 @@ public class AvailabilityService : IAvailabilityService
 
         if (availabilityToChange.Start.Day != dto.Start.Day || availabilityToChange.End.Day != dto.End.Day)
             throw new InvalidOperationException($"You can't change days of availability");
-        
+
         availabilityToChange.Start = dto.Start;
         availabilityToChange.End = dto.End;
 
         _dbContext.SaveChanges();
-
     }
 
     public AvailabilityDto? AvailabilityInDay(DateTime date, int workerId)
@@ -119,8 +119,8 @@ public class AvailabilityService : IAvailabilityService
 
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
-        
-        var availabilityInDay =  worker
+
+        var availabilityInDay = worker
             .Availabilities
             .FirstOrDefault(w => w.Start.Date == date.Date);
 
@@ -136,7 +136,7 @@ public class AvailabilityService : IAvailabilityService
         if (worker == null) throw new NotFoundException($"Worker of id {workerId} is not found");
 
         var availabilitiesToAdd = new List<Availability>();
-        
+
         var workDuration = timeRange.EndDate.TimeOfDay - timeRange.StartDate.TimeOfDay;
 
         while (timeRange.StartDate.Date <= timeRange.EndDate.Date)
@@ -153,7 +153,8 @@ public class AvailabilityService : IAvailabilityService
 
         foreach (var element in availabilitiesToAdd)
         {
-            var foundAvailability = _dbContext.Availabilities.FirstOrDefault(a => a.Start.Day == element.Start.Day && a.WorkerId == element.WorkerId);
+            var foundAvailability = _dbContext.Availabilities.FirstOrDefault(a =>
+                a.Start.Day == element.Start.Day && a.WorkerId == element.WorkerId);
             if (foundAvailability == null)
             {
                 _dbContext.Availabilities.Add(element);
@@ -161,8 +162,6 @@ public class AvailabilityService : IAvailabilityService
         }
 
         _dbContext.SaveChanges();
-
-
     }
 
 
@@ -175,7 +174,4 @@ public class AvailabilityService : IAvailabilityService
 
         return worker;
     }
-
-
-
 }

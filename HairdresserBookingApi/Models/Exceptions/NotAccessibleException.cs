@@ -2,5 +2,7 @@
 
 public class NotAccessibleException : Exception
 {
-    public NotAccessibleException(string message) : base(message) { }
+    public NotAccessibleException(string message) : base(message)
+    {
+    }
 }

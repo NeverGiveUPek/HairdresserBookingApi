@@ -12,8 +12,6 @@ public class SeederFacade
     private readonly List<ISeeder> _seeders = new();
 
 
-
-
     public SeederFacade(BookingDbContext dbContext, IPasswordHasher<User> passwordHasher)
     {
         _dbContext = dbContext;

@@ -7,7 +7,6 @@ namespace HairdresserBookingApi.Models.Db;
 
 public class BookingDbContext : DbContext
 {
-
     public DbSet<Activity> Activities { get; set; }
     public DbSet<Worker> Workers { get; set; }
     public DbSet<WorkerActivity> WorkerActivities { get; set; }
@@ -25,7 +24,7 @@ public class BookingDbContext : DbContext
             .HasOne(ws => ws.Worker)
             .WithMany(w => w.WorkerActivity)
             .HasForeignKey(ws => ws.WorkerId);
-        
+
         modelBuilder.Entity<WorkerActivity>()
             .HasOne(ws => ws.Activity)
             .WithMany(s => s.WorkerActivity)
@@ -34,6 +33,5 @@ public class BookingDbContext : DbContext
 
     public BookingDbContext(DbContextOptions<BookingDbContext> options) : base(options)
     {
-
     }
 }

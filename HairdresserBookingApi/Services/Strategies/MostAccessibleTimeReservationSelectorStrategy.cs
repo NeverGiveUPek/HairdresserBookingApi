@@ -8,7 +8,6 @@ namespace HairdresserBookingApi.Services.Strategies;
 
 public class MostAccessibleTimeReservationSelectorStrategy : IReservationSelectorStrategy
 {
-    
     public DateTime? FindBestTime(List<TimeRange> accessibility)
     {
         return accessibility.OrderByDescending(x => x.EndDate - x.StartDate).FirstOrDefault()?.StartDate;

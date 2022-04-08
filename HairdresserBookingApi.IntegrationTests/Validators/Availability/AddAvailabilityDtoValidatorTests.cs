@@ -23,7 +23,7 @@ public class AddAvailabilityDtoValidatorTests
             End = DateTime.Now.Date.AddHours(18),
         };
 
-        var result =  validator.TestValidate(model);
+        var result = validator.TestValidate(model);
 
         result.ShouldNotHaveAnyValidationErrors();
     }
@@ -78,11 +78,9 @@ public class AddAvailabilityDtoValidatorTests
             },
             new AddAvailabilityDto()
             {
-                
             }
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
-
 }

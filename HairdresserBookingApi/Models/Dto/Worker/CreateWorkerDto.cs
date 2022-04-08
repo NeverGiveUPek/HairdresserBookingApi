@@ -5,16 +5,11 @@ namespace HairdresserBookingApi.Models.Dto.Worker;
 
 public class CreateWorkerDto
 {
+    [Required] [MaxLength(50)] public string FirstName { get; set; }
 
-    [Required]
-    [MaxLength(50)]
-    public string FirstName { get; set; }
-    
-    [Required]
-    [MaxLength(50)]
-    public string LastName { get; set; }
-    
-    
+    [Required] [MaxLength(50)] public string LastName { get; set; }
+
+
     [Required]
     [MaxLength(50)]
     [EmailAddress]
@@ -26,5 +21,4 @@ public class CreateWorkerDto
     [Phone]
     [WorkerPhoneNumberUnique]
     public string PhoneNumber { get; set; }
-
 }

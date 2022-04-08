@@ -10,7 +10,7 @@ public class ActivitySeeder : ISeeder
         if (dbContext.Activities.Any()) return;
 
         var activities = GetActivities();
-        
+
         dbContext.Activities.AddRange(activities);
         dbContext.SaveChanges();
     }

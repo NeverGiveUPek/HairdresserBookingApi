@@ -19,9 +19,8 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
     {
         _factory = factory;
         _client = _factory.CreateClient();
-
     }
-    
+
 
     [Fact]
     public async Task GetAll_ReturnsOk()
@@ -58,14 +57,14 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
 
 
     [Fact]
-    public async Task GetById_ForNonExistingEntity_ReturnsNotFound(){
-    
+    public async Task GetById_ForNonExistingEntity_ReturnsNotFound()
+    {
         var response = await _client.GetAsync($"api/activity/{-1}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
-    [Fact]  
+    [Fact]
     public async Task Create_ForValidData_ReturnsCreated()
     {
         var model = new CreateActivityDto()
@@ -81,6 +80,7 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
     }
+
     [Fact]
     public async Task Create_ForInvalidData_ReturnsBadRequest()
     {
@@ -118,7 +118,7 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
         EntitySeeder.SeedActivity(firstModel, _factory);
 
         var httpContent = secondModel.ToJsonHttpContent();
-        
+
         var response = await _client.PostAsync("api/activity", httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -179,7 +179,6 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
     [Fact]
     public async Task Update_ForValidModelAndNonExistingId_ReturnsNotFound()
     {
-        
         var updateDto = new UpdateActivityDto()
         {
             Name = "Change test",
@@ -221,6 +220,4 @@ public class ActivityControllerTests : IClassFixture<CustomWebApplicationFactory
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
-
-
 }

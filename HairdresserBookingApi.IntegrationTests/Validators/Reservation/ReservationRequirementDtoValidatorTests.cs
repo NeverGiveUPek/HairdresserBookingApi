@@ -20,7 +20,8 @@ public class ReservationRequirementDtoValidatorTests
 
         var model = new ReservationRequirementDto()
         {
-            TimeRange = new TimeRange(DateTime.Now.Date.AddDays(1).AddHours(10), DateTime.Now.Date.AddDays(1).AddHours(18)),
+            TimeRange = new TimeRange(DateTime.Now.Date.AddDays(1).AddHours(10),
+                DateTime.Now.Date.AddDays(1).AddHours(18)),
             WorkerActivityId = 1
         };
 
@@ -44,20 +45,22 @@ public class ReservationRequirementDtoValidatorTests
     {
         var list = new List<ReservationRequirementDto>()
         {
-           
             new ReservationRequirementDto()
             {
-                TimeRange = new TimeRange(DateTime.Now.Date.AddDays(-1).AddHours(10), DateTime.Now.Date.AddDays(1).AddHours(18)),
+                TimeRange = new TimeRange(DateTime.Now.Date.AddDays(-1).AddHours(10),
+                    DateTime.Now.Date.AddDays(1).AddHours(18)),
                 WorkerActivityId = 1
             },
             new ReservationRequirementDto()
             {
-                TimeRange = new TimeRange(DateTime.Now.Date.AddDays(1).AddHours(10), DateTime.Now.Date.AddDays(1).AddHours(5)),
+                TimeRange = new TimeRange(DateTime.Now.Date.AddDays(1).AddHours(10),
+                    DateTime.Now.Date.AddDays(1).AddHours(5)),
                 WorkerActivityId = 1
             },
             new ReservationRequirementDto()
             {
-                TimeRange = new TimeRange(DateTime.Now.Date.AddDays(1).AddHours(10), DateTime.Now.Date.AddDays(1).AddHours(18))
+                TimeRange = new TimeRange(DateTime.Now.Date.AddDays(1).AddHours(10),
+                    DateTime.Now.Date.AddDays(1).AddHours(18))
             },
             new ReservationRequirementDto()
             {
@@ -79,12 +82,11 @@ public class ReservationRequirementDtoValidatorTests
             {
                 TimeRange = new TimeRange
                 {
-
                 },
                 WorkerActivityId = 1
             }
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 }

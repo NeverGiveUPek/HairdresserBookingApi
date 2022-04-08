@@ -23,7 +23,9 @@ public class AccountService : IAccountService
     private readonly IUserContextService _userContextService;
     private readonly ILogger<AccountService> _logger;
 
-    public AccountService(IMapper mapper, BookingDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IUserContextService userContextService, ILogger<AccountService> logger)
+    public AccountService(IMapper mapper, BookingDbContext dbContext, IPasswordHasher<User> passwordHasher,
+        AuthenticationSettings authenticationSettings, IUserContextService userContextService,
+        ILogger<AccountService> logger)
     {
         _mapper = mapper;
         _dbContext = dbContext;
@@ -38,7 +40,7 @@ public class AccountService : IAccountService
     {
         var user = _mapper.Map<User>(dto);
 
-        var roleUser =  _dbContext.Roles.FirstOrDefault(r => r.Name == "User");
+        var roleUser = _dbContext.Roles.FirstOrDefault(r => r.Name == "User");
 
         if (roleUser == null) throw new Exception("Can't reach user role");
 
@@ -62,8 +64,9 @@ public class AccountService : IAccountService
         if (user == null) throw new AppException("Email or Password is incorrect");
 
         var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
-        
-        if(passwordVerificationResult == PasswordVerificationResult.Failed) throw new AppException("Email or Password is incorrect");
+
+        if (passwordVerificationResult == PasswordVerificationResult.Failed)
+            throw new AppException("Email or Password is incorrect");
 
         var claimList = new List<Claim>()
         {

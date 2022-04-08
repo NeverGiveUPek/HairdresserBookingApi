@@ -35,16 +35,5 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
                     context.AddFailure("Email", "Email must be unique");
                 }
             });
-
-
-
-
-
-
-
-
-
     }
-
-
 }

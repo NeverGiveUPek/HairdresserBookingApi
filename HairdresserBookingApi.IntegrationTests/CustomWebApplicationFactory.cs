@@ -24,7 +24,6 @@ public class CustomWebApplicationFactory<TEntryPoint> : WebApplicationFactory<Pr
 
 
             services.AddDbContext<BookingDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
-
         });
     }
 }

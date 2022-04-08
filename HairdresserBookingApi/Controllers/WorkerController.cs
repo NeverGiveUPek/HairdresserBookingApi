@@ -17,7 +17,7 @@ public class WorkerController : ControllerBase
         _workerService = workerService;
     }
 
-    
+
     [HttpGet]
     [Authorize]
     public ActionResult<List<WorkerDto>> GetAll()
@@ -62,5 +62,4 @@ public class WorkerController : ControllerBase
 
         return NoContent();
     }
-
 }

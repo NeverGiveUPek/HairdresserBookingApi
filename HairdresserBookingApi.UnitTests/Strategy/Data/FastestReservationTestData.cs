@@ -52,5 +52,4 @@ public class FastestReservationTestData : IEnumerable<object[]>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    
 }

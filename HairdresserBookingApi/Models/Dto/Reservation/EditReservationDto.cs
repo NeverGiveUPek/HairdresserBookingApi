@@ -3,5 +3,4 @@
 public class EditReservationDateDto
 {
     public DateTime Date { get; set; }
-
 }

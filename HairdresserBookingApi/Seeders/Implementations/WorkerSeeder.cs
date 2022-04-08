@@ -73,7 +73,7 @@ public class WorkerSeeder : ISeeder
                     Start = todayStart,
                     End = todayEnd
                 }
-            } 
+            }
         });
 
 

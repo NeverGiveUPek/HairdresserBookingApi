@@ -8,7 +8,7 @@ public class CreateUserDto
     //validation by CreateUserDtoValidator
 
     public string Email { get; set; }
-    
+
     public string Password { get; set; }
 
     public string ConfirmPassword { get; set; }
@@ -18,5 +18,4 @@ public class CreateUserDto
     public string? LastName { get; set; }
 
     public DateTime? DateOfBirth { get; set; }
-
 }

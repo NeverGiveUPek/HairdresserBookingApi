@@ -11,5 +11,4 @@ public class AvailableActivityDto
     public bool IsForMan { get; set; }
 
     public int MinPrice { get; set; }
-
 }

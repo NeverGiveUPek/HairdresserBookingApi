@@ -71,10 +71,9 @@ public class TimeRangeAvailabilityDtoValidatorTests
             },
             new TimeRangeAvailabilityDto()
             {
-
             }
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 }

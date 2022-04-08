@@ -9,6 +9,4 @@ public class ActivityDto
     public string? Description { get; set; }
 
     public bool IsForMan { get; set; }
-
-
 }

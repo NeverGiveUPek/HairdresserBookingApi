@@ -50,11 +50,9 @@ public class EditReservationDateDtoValidatorTests
             },
             new EditReservationDateDto()
             {
-                
             }
-
         };
 
-        return list.Select(l => new object[] { l });
+        return list.Select(l => new object[] {l});
     }
 }
