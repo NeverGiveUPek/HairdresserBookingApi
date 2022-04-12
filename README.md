@@ -39,5 +39,5 @@
   * Unit tests for business logic
   * Integration tests for all controllers methods and validators
   
- ## Instalation
+ ## Installation
   To run this project it is necessary to change connecting string value in `appsettings.json` file which is in api project. After that use command `update-database` in Package Manager Console. After that application should run properly. Default `CORS` policy will allow only `http://localhost8080` origin. In order to change it, open appsettings.json file and replace value for `AllowedOrigins`.By default swagger documentation should be opened after running application.
